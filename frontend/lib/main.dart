@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
-import 'create.dart';
-import 'loading.dart';
+import 'route.dart';
+import 'pages/welcome.dart';
+void main() => runApp(MyApp());
 
-void main() {
-  runApp(MaterialApp(routes: {
-    '/': (context) => const LoadingPage(),
-    '/create': (context) => const CreatePage(),
-    '/login': (context) => const LoginPage(),
-  }));
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Material App',
+      home: WelcomePage(),
+      routes: staticRoutes,
+    );
+  }
 }
