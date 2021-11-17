@@ -61,7 +61,7 @@ Widget _buildInputForm() {
             hintText: "Password",
             isPassword: true),
         Container(
-          width: w(280),
+          width: w(303),
           margin: EdgeInsets.only(top: h(23)),
           child: Container(
             child: Row(
@@ -73,7 +73,7 @@ Widget _buildInputForm() {
                   ),
                 ),
                 Spacer(),
-                forwardRoundButton(64, 64),
+                forwardRoundButton(45, 45),
               ],
             ),
           ),

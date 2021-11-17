@@ -50,14 +50,14 @@ Widget _buildInputForm() {
             hintText: "Password",
             isPassword: true),
         Container(
-          width: w(280),
+          width: w(303),
           margin: EdgeInsets.only(top: h(23)),
           child: Row(
             children: <Widget>[
               Text(
                 "Create Account",
                 style: TextStyle(
-                  fontSize: f(28),
+                  fontSize: f(32),
                 ),
               ),
               Spacer(),
@@ -76,7 +76,7 @@ Widget _buildInputForm() {
 
 Widget _buildSignIn(context) {
   return Container(
-      margin: EdgeInsets.only(bottom: h(58)),
+      margin: EdgeInsets.only(bottom: h(38)),
       child: TextButton(
         onPressed: () {
           Navigator.pushNamed(context, "/login");
