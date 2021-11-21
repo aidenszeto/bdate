@@ -10,4 +10,8 @@ const getAllUsers = async (req, res) => {
     });
 };
 
-module.exports = { getAllUsers };
+const addUser = async (req, res) => {
+  console.log(req.body);
+};
+
+module.exports = {getAllUsers, addUser};

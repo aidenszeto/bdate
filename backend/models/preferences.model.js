@@ -31,5 +31,5 @@ const PreferencesSchema = new Schema({
   },
 });
 
-const Preferences = mongoose.model("attributes", PreferencesSchema);
-module.exports = Preferences;
+const Preferences = mongoose.model("preferences", PreferencesSchema);
+module.exports = {Preferences, PreferencesSchema};

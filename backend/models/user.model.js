@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Preferences = require("./preferences.model");
+const {PreferencesSchema} = require("./preferences.model");
 const Schema = mongoose.Schema;
 
 const {String, Array} = Schema.Types;
@@ -72,9 +72,9 @@ const UserSchema = new Schema({
   },
   drink: {
     type: String,
-    required: [true, "Drink cannot be blank"],
+    required: [true, "Drinking cannot be blank"],
   },
-  preferences: Preferences,
+  preferences: PreferencesSchema,
   instagram: {
     type: String,
     default: "",
