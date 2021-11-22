@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 const getAllUsers = async (req, res) => {
   User.find()
@@ -55,8 +55,11 @@ const addUser = async (req, res) => {
   });
 
   //@ucla.edu or @g.ucla.edu
-  if(!email.endsWith("ucla.edu")){
-    res.send(400, {error: "Users must use their UCLA school email when registering their accounts"})
+  if (!email.endsWith("ucla.edu")) {
+    res.send(400, {
+      error:
+        "Users must use their UCLA school email when registering their accounts",
+    });
   }
 
   await sendVerificationEmail(email);
@@ -73,68 +76,101 @@ const addUser = async (req, res) => {
 };
 
 const verifyUser = async (req, res) => {
-  let query = { email: req.params.email }
-  let newVal = {
-    $set: {verified: true}
-  }
-  User.updateOne(query, newVal)
-    .then(status => {
-      if(status.acknowledged){
-        res.send(status)
-      } else {
-        res.send(404, {error: `Could not update user with email ${email}`})
-      }
+  User.findOneAndUpdate({email: req.params.email}, {$set: {verified: true}})
+    .then((status) => {
+      res.send(status);
     })
-    .catch(err => {
-      res.send(err)
-    })
-}
+    .catch((err) => {
+      res.send(err);
+    });
+};
 
 //liked by and disliked by insertion. add match in the liked one as well
 
 const updateLikedBy = async (req, res) => {
   const {user, likedUser} = req.body;
-}
+
+  User.findByIdAndUpdate(likedUser, {$push: {likedBy: user}})
+    .then((status) => {
+      console.log(status);
+      // if (!status.acknowledged)
+      //   res.status(404).send({
+      //     error: `Could not update user's likedBy array with id ${user}`,
+      //   });
+
+      // Go through liked person's array and if they liked the current user, add each other to their "matches" array
+      User.findById(user, "likedBy")
+        .then((currentUser) => {
+          if (currentUser.likedBy.includes(likedUser)) {
+            addToMatchesList(user, likedUser);
+          }
+        })
+        .catch((err) => res.send(err));
+
+      res.send(status);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+
+//idk what to do within the .then and the .catch blocks here
+const addToMatchesList = async (user1, user2) => {
+  User.findByIdAndUpdate(user1, {$push: {matches: user2}})
+    .then((res) => {
+      //console.log(res)
+    })
+    .catch((err) => {
+      //console.log(err)
+    });
+
+  User.findByIdAndUpdate(user2, {$push: {matches: user1}})
+    .then((res) => {
+      //console.log(res)
+    })
+    .catch((err) => {
+      //console.log(err)
+    });
+};
 
 const updateDislikedBy = async (req, res) => {
+  const {user, dislikedUser} = req.body;
 
-}
-
-// make a match list
-
-// get a route to like someone/dislike someone (adjusting matches array will be done in liked array)
+  User.findByIdAndUpdate(dislikedUser, {$push: {dislikedBy: user}})
+    .then((status) => {
+      res.send(status);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
 
 const getUser = async (req, res) => {
-  const {
-    _id,
-  } = req.params
+  const {_id} = req.params;
 
   User.findById(_id)
     .then((user) => {
-      res.send(user)
+      res.send(user);
     })
     .catch((err) => {
-      res.send(err)
-    })
+      res.send(err);
+    });
 };
 
-const loginUser = async(req, res) => {
-  const {
-    email,
-    password
-  } = req.body
+const loginUser = async (req, res) => {
+  const {email, password} = req.body;
 
   User.findOne({
     email,
-    password
+    password,
   })
     .then((user) => {
-      res.send(user)
+      res.send(user);
     })
     .catch((err) => {
-      res.send(401, "Invalid login credentials")
-    })
-}
+      res.send(401, "Invalid login credentials");
+    });
+};
 
 const sendVerificationEmail = async (email) => {
   let testEmail = await nodemailer.createTestAccount();
@@ -143,26 +179,31 @@ const sendVerificationEmail = async (email) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      //user: testEmail.user,
-      //pass: testEmail.pass,
       user: "bdateucla@gmail.com",
-      //pass: "uhzs mvoc radm agzh"
-      pass:"uhzs mvoc radm agzh"
+      pass: "uhzs mvoc radm agzh",
     },
   });
 
-  let verificationUrl = `http://localhost:8080/user/verify/${email}`
-  email = "zasaimster@gmail.com"
+  let verificationUrl = `http://localhost:8080/user/verify/${email}`;
+  email = "zasaimster@gmail.com";
 
   let info = await transporter.sendMail({
     from: '"BDate verification" <verify@bdate.com>', // sender address
     to: `${email}`, // list of receivers
     subject: "Verify your Bdate Account!", // Subject line
-    text: "Click on the link below to verify your email!", 
-    html: `<a href='${verificationUrl}'>Verify!</a>`
+    text: "Click on the link below to verify your email!",
+    html: `<a href='${verificationUrl}'>Verify!</a>`,
   });
 
-  console.log(info)
-}
+  console.log(info);
+};
 
-module.exports = { getAllUsers, addUser, getUser, loginUser, verifyUser, updateLikedBy, updateDislikedBy };
+module.exports = {
+  getAllUsers,
+  addUser,
+  getUser,
+  loginUser,
+  verifyUser,
+  updateLikedBy,
+  updateDislikedBy,
+};
