@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
 
 const getAllUsers = async (req, res) => {
   User.find()
@@ -12,8 +12,6 @@ const getAllUsers = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  await sendVerificationEmail();
-  
   const {
     firstName,
     lastName,
@@ -61,16 +59,38 @@ const addUser = async (req, res) => {
     res.send(400, {error: "Users must use their UCLA school email when registering their accounts"})
   }
 
+  await sendVerificationEmail(email);
+
   user
     .save()
-    .then((obj) => {
-      res.send(obj);
+    .then((user) => {
+      res.send(user);
     })
     .catch((err) => {
       console.log(err);
       res.send(err);
     });
 };
+
+const verifyUser = async (req, res) => {
+  let query = { email: req.params.email }
+  let newVal = {
+    $set: {verified: true}
+  }
+  User.updateOne(query, newVal)
+    .then(status => {
+      if(status.acknowledged){
+        res.send(status)
+      } else {
+        res.send(404, {error: `Could not update user with email ${email}`})
+      }
+    })
+    .catch(err => {
+      res.send(err)
+    })
+}
+
+//liked by and disliked by insertion. add match in the liked one as well
 
 const getUser = async (req, res) => {
   const {
@@ -104,28 +124,33 @@ const loginUser = async(req, res) => {
     })
 }
 
-const sendVerificationEmail = async () => {
+const sendVerificationEmail = async (email) => {
   let testEmail = await nodemailer.createTestAccount();
   console.log(testEmail);
 
   let transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false,
+    service: "gmail",
     auth: {
-      user: testAccount.user, 
-      pass: testAccount.pass, 
+      //user: testEmail.user,
+      //pass: testEmail.pass,
+      user: "bdateucla@gmail.com",
+      //pass: "uhzs mvoc radm agzh"
+      pass:"uhzs mvoc radm agzh"
     },
   });
 
+  let verificationUrl = `http://localhost:8080/user/verify/${email}`
+  email = "zasaimster@gmail.com"
+
   let info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    to: "bar@example.com, baz@example.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", 
-    html: "<b>Hello world?</b>", 
+    from: '"BDate verification" <verify@bdate.com>', // sender address
+    to: `${email}`, // list of receivers
+    subject: "Verify your Bdate Account!", // Subject line
+    text: "Click on the link below to verify your email!", 
+    html: `<a href='${verificationUrl}'>Verify!</a>`
   });
 
+  console.log(info)
 }
 
-module.exports = { getAllUsers, addUser, getUser };
+module.exports = { getAllUsers, addUser, getUser, loginUser, verifyUser };
