@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
           children: <Widget>[
             // _buildLogo(),
             buildHeadTitle(),
-            _buildInputForm(),
+            _buildInputForm(context),
             Spacer(),
             _buildSignUp(context),
           ],
@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
 //   Navigator.pushNamed(context, "/app");
 // }
 
-Widget _buildInputForm() {
+Widget _buildInputForm(context) {
   return Container(
     width: w(303),
     margin: EdgeInsets.only(top: h(207)),
@@ -73,7 +73,7 @@ Widget _buildInputForm() {
                   ),
                 ),
                 Spacer(),
-                forwardRoundButton(45, 45),
+                forwardRoundButton(45, 45, context, "/"),
               ],
             ),
           ),
