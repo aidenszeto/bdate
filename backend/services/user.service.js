@@ -19,7 +19,7 @@ const addUser = async (req, res) => {
     lastName,
     email,
     password,
-    dateOfBirth,
+    age,
     gender,
     ethnicity,
     height,
@@ -28,7 +28,6 @@ const addUser = async (req, res) => {
     major,
     smoke,
     drink,
-    preferences,
     instagram,
     snapchat,
     likedby,
@@ -41,7 +40,7 @@ const addUser = async (req, res) => {
     lastName,
     email,
     password,
-    dateOfBirth,
+    age,
     gender,
     ethnicity,
     height,
@@ -50,7 +49,6 @@ const addUser = async (req, res) => {
     major,
     smoke,
     drink,
-    preferences,
     instagram,
     snapchat,
     likedby,
@@ -66,7 +64,6 @@ const addUser = async (req, res) => {
   user
     .save()
     .then((obj) => {
-      console.log("saved object", obj);
       res.send(obj);
     })
     .catch((err) => {
@@ -86,6 +83,24 @@ const getUser = async (req, res) => {
     })
     .catch((err) => {
       res.send(err)
+    })
+};
+
+const loginUser = async(req, res) => {
+  const {
+    email,
+    password
+  } = req.body
+
+  User.findOne({
+    email,
+    password
+  })
+    .then((user) => {
+      res.send(user)
+    })
+    .catch((err) => {
+      res.send(401, "Invalid login credentials")
     })
 }
 

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const {PreferencesSchema} = require("./preferences.model");
 const Schema = mongoose.Schema;
 
-const {String, Array, Boolean} = Schema.Types;
+const {String, Array, Boolean, Number} = Schema.Types;
 
 /**
  * User model:
@@ -38,9 +38,9 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Password cannot be blank"],
   },
-  dateOfBirth: {
-    type: Date,
-    required: [true, "Birthday cannot be blank"],
+  age: {
+    type: Number,
+    required: [true, "Age cannot be blank"],
   },
   gender: {
     type: String,
@@ -78,14 +78,13 @@ const UserSchema = new Schema({
     type: String,
     default: "https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg"
   },
-  preferences: PreferencesSchema,
   instagram: {
     type: String,
-    default: "",
+    default: null,
   },
   snapchat: {
     type: String,
-    default: "",
+    default: null,
   },
   likedBy: {
     type: Array,
