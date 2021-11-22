@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const {PreferencesSchema} = require("./preferences.model");
 const Schema = mongoose.Schema;
 
-const {String, Array} = Schema.Types;
+const {String, Array, Boolean} = Schema.Types;
 
 /**
  * User model:
@@ -67,12 +67,16 @@ const UserSchema = new Schema({
     required: [true, "Major cannot be blank"],
   },
   smoke: {
-    type: String,
+    type: Boolean,
     required: [true, "Smoking cannot be blank"],
   },
   drink: {
-    type: String,
+    type: Boolean,
     required: [true, "Drinking cannot be blank"],
+  },
+  photo: {
+    type: String,
+    default: "https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg"
   },
   preferences: PreferencesSchema,
   instagram: {

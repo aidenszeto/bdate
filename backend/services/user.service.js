@@ -66,4 +66,18 @@ const addUser = async (req, res) => {
     });
 };
 
-module.exports = {getAllUsers, addUser};
+const getUser = async (req, res) => {
+  const {
+    _id,
+  } = req.params
+
+  User.findById(_id)
+    .then((user) => {
+      res.send(user)
+    })
+    .catch((err) => {
+      res.send(err)
+    })
+}
+
+module.exports = { getAllUsers, addUser, getUser };
