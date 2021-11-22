@@ -16,7 +16,7 @@ const addUser = async (req, res) => {
     lastName,
     email,
     password,
-    dateOfBirth,
+    age,
     gender,
     ethnicity,
     height,
@@ -25,7 +25,6 @@ const addUser = async (req, res) => {
     major,
     smoke,
     drink,
-    preferences,
     instagram,
     snapchat,
     likedby,
@@ -38,7 +37,7 @@ const addUser = async (req, res) => {
     lastName,
     email,
     password,
-    dateOfBirth,
+    age,
     gender,
     ethnicity,
     height,
@@ -47,7 +46,6 @@ const addUser = async (req, res) => {
     major,
     smoke,
     drink,
-    preferences,
     instagram,
     snapchat,
     likedby,
@@ -57,7 +55,6 @@ const addUser = async (req, res) => {
   user
     .save()
     .then((obj) => {
-      console.log("saved object", obj);
       res.send(obj);
     })
     .catch((err) => {
