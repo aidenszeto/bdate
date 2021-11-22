@@ -7,7 +7,7 @@ const getAllUsers = async (req, res) => {
       res.send(users);
     })
     .catch((err) => {
-      console.log("Error: ", err);
+      res.send(err);
     });
 };
 
@@ -85,19 +85,11 @@ const verifyUser = async (req, res) => {
     });
 };
 
-//liked by and disliked by insertion. add match in the liked one as well
-
 const updateLikedBy = async (req, res) => {
   const {user, likedUser} = req.body;
 
   User.findByIdAndUpdate(likedUser, {$push: {likedBy: user}})
     .then((status) => {
-      console.log(status);
-      // if (!status.acknowledged)
-      //   res.status(404).send({
-      //     error: `Could not update user's likedBy array with id ${user}`,
-      //   });
-
       // Go through liked person's array and if they liked the current user, add each other to their "matches" array
       User.findById(user, "likedBy")
         .then((currentUser) => {
@@ -173,9 +165,6 @@ const loginUser = async (req, res) => {
 };
 
 const sendVerificationEmail = async (email) => {
-  let testEmail = await nodemailer.createTestAccount();
-  console.log(testEmail);
-
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -194,8 +183,6 @@ const sendVerificationEmail = async (email) => {
     text: "Click on the link below to verify your email!",
     html: `<a href='${verificationUrl}'>Verify!</a>`,
   });
-
-  console.log(info);
 };
 
 module.exports = {
