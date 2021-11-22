@@ -9,6 +9,9 @@ router.get("/get/:_id", User.getUser);
 
 router.post("/login", User.loginUser);
 router.post("/signup", User.addUser);
+
 router.put("/verify/:email", User.verifyUser);
+router.put("/likeduser", User.updateLikedBy);
+
 
 module.exports = router;

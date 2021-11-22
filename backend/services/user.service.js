@@ -92,6 +92,18 @@ const verifyUser = async (req, res) => {
 
 //liked by and disliked by insertion. add match in the liked one as well
 
+const updateLikedBy = async (req, res) => {
+  const {user, likedUser} = req.body;
+}
+
+const updateDislikedBy = async (req, res) => {
+
+}
+
+// make a match list
+
+// get a route to like someone/dislike someone (adjusting matches array will be done in liked array)
+
 const getUser = async (req, res) => {
   const {
     _id,
@@ -153,4 +165,4 @@ const sendVerificationEmail = async (email) => {
   console.log(info)
 }
 
-module.exports = { getAllUsers, addUser, getUser, loginUser, verifyUser };
+module.exports = { getAllUsers, addUser, getUser, loginUser, verifyUser, updateLikedBy, updateDislikedBy };
