@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const nodemailer = require('nodemailer')
 
 const getAllUsers = async (req, res) => {
   User.find()
@@ -11,6 +12,8 @@ const getAllUsers = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
+  await sendVerificationEmail();
+  
   const {
     firstName,
     lastName,
@@ -52,6 +55,12 @@ const addUser = async (req, res) => {
     dislikedby,
     matches,
   });
+
+  //@ucla.edu or @g.ucla.edu
+  if(!email.endsWith("ucla.edu")){
+    res.send(400, {error: "Users must use their UCLA school email when registering their accounts"})
+  }
+
   user
     .save()
     .then((obj) => {
@@ -95,4 +104,28 @@ const loginUser = async(req, res) => {
     })
 }
 
-module.exports = { getAllUsers, addUser, getUser, loginUser };
+const sendVerificationEmail = async () => {
+  let testEmail = await nodemailer.createTestAccount();
+  console.log(testEmail);
+
+  let transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false,
+    auth: {
+      user: testAccount.user, 
+      pass: testAccount.pass, 
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    to: "bar@example.com, baz@example.com", // list of receivers
+    subject: "Hello ✔", // Subject line
+    text: "Hello world?", 
+    html: "<b>Hello world?</b>", 
+  });
+
+}
+
+module.exports = { getAllUsers, addUser, getUser };

@@ -98,6 +98,10 @@ const UserSchema = new Schema({
     type: Array,
     default: [],
   },
+  verified: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const User = mongoose.model("user", UserSchema);
