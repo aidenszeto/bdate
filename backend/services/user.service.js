@@ -160,9 +160,36 @@ const loginUser = async (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      res.send(401, "Invalid login credentials");
-    });
-};
+      res.send(401, "Invalid login credentials")
+    })
+}
+
+const filterUsers = async(req, res) => {
+  const {
+    whoToDate, // array
+    year, // array
+    location, // array,
+    drink, // bool
+    smoke, // bool
+  } = req.body
+
+  filtered = []
+
+  User.find()
+    .then((users) => {
+      users.filter((user) => {
+        if (whoToDate.includes(user.gender) && year.includes(user.year) && 
+            location.includes(user.location) && drink == user.drink && smoke == user.smoke) {
+          filtered.push(user)
+          return true
+        }
+      })
+      res.send(filtered)
+    })
+    .catch((err) => {
+      res.send(err)
+    })
+}
 
 const sendVerificationEmail = async (email) => {
   let transporter = nodemailer.createTransport({
@@ -190,6 +217,7 @@ module.exports = {
   addUser,
   getUser,
   loginUser,
+  filterUsers,
   verifyUser,
   updateLikedBy,
   updateDislikedBy,
