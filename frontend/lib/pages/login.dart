@@ -73,7 +73,7 @@ Widget _buildInputForm(context) {
                   ),
                 ),
                 Spacer(),
-                forwardRoundButton(45, 45, context, "/"),
+                forwardRoundButton(45, 45, context, "/application"),
               ],
             ),
           ),
