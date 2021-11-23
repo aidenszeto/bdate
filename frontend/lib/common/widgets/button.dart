@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/values/values.dart';
+import 'package:bdate/common/controller/controller.dart';
 
 Widget forwardRoundButton(double width, double height, context, String route) {
   return Container(
@@ -21,12 +22,12 @@ Widget forwardRoundButton(double width, double height, context, String route) {
   );
 }
 
-Widget likeButton() {
+Widget likeButton(Function handleLike) {
   return Container(
     width: h(78),
     height: h(78),
     child: TextButton(
-      onPressed: (){},
+      onPressed: handleLike(),
       style: TextButton.styleFrom(backgroundColor: AppColors.primaryElement, shape: CircleBorder()),
       child: Icon(
         Icons.favorite,
