@@ -18,6 +18,7 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
   bool specifyImage = false;
   File _image = File("");
   final ImagePicker _picker = ImagePicker();
+  List<TextEditingController> optional_controllers = [];
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
   Widget _buildInputForm(context) {
     final TextEditingController _instagram = TextEditingController();
     final TextEditingController _snapchat = TextEditingController();
+    optional_controllers = [_instagram, _snapchat];
 
     return Container(
       width: w(303),
@@ -57,21 +59,11 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
               height: 1,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: InputTextEdit(
-              controller: _instagram,
-              keyboardType: TextInputType.name,
-              hintText: "Instagram Account",
-            ),
-          ),
-          InputTextEdit(
-            controller: _snapchat,
-            keyboardType: TextInputType.name,
-            hintText: "Snapchat Account",
+          Container(
+            child: optionalFields(optional_controllers),
           ),
           Container(
-            padding: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 40),
             child: Center(
               child: Text("Profile Picture",
                   style:
@@ -117,7 +109,9 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
     return Container(
         margin: EdgeInsets.only(bottom: h(38)),
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, "/login");
+          },
           child: Text(
             "Sign in",
             style: TextStyle(color: AppColors.primaryText, fontSize: f(18)),
