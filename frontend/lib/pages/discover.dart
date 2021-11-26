@@ -54,7 +54,20 @@ class _discoverPageState extends State<discoverPage> {
 
   Future<VoidCallback> handleLike() async {
     print(index);
-    print(n);
+    if(index <= n-1) {
+      var new_user = await GetUser.getUser(list_user[index].id);
+      setState(() {
+        user = new_user;
+      });
+      index += 1;
+    }
+    return () => setState(() {
+    });
+  }
+
+
+  Future<VoidCallback> handleDisLike() async {
+    print(index);
     if(index <= n-1) {
       var new_user = await GetUser.getUser(list_user[index].id);
       setState(() {
@@ -72,14 +85,13 @@ class _discoverPageState extends State<discoverPage> {
       body: Center(
         child: Column(
           children: <Widget>[
-            // _buildLogo(),
             card(user),
             Container(
               margin: EdgeInsets.only(top: h(15)),
               width: h(261),
               child: Row(
               children: <Widget>[
-                dislikeButton(),
+                dislikeButton(handleDisLike),
                 Spacer(),
                 setButton(context),
                 Spacer(),

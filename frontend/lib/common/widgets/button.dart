@@ -48,12 +48,12 @@ Widget likeButton(Function handleLike) {
   );
 }
 
-Widget dislikeButton() {
+Widget dislikeButton(Function handleDisLike) {
   return Container(
     width: h(78),
     height: h(78),
     child: TextButton(
-      onPressed: (){},
+      onPressed: () => handleDisLike(),
       style: TextButton.styleFrom(backgroundColor: AppColors.primaryElementText, shape: CircleBorder()),
       child: Icon(
         Icons.close,
