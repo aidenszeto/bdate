@@ -76,7 +76,10 @@ const addUser = async (req, res) => {
 };
 
 const verifyUser = async (req, res) => {
-  User.findOneAndUpdate({email: req.params.email}, {$set: {verified: true}})
+  User.findOneAndUpdate(
+    { email: req.params.email },
+    { $set: { verified: true } }
+  )
     .then((status) => {
       res.send(status);
     })
@@ -86,9 +89,9 @@ const verifyUser = async (req, res) => {
 };
 
 const updateLikedBy = async (req, res) => {
-  const {user, likedUser} = req.body;
+  const { user, likedUser } = req.body;
 
-  User.findByIdAndUpdate(likedUser, {$push: {likedBy: user}})
+  User.findByIdAndUpdate(likedUser, { $push: { likedBy: user } })
     .then((status) => {
       // Go through liked person's array and if they liked the current user, add each other to their "matches" array
       User.findById(user, "likedBy")
@@ -108,7 +111,7 @@ const updateLikedBy = async (req, res) => {
 
 //idk what to do within the .then and the .catch blocks here
 const addToMatchesList = async (user1, user2) => {
-  User.findByIdAndUpdate(user1, {$push: {matches: user2}})
+  User.findByIdAndUpdate(user1, { $push: { matches: user2 } })
     .then((res) => {
       //console.log(res)
     })
@@ -116,7 +119,7 @@ const addToMatchesList = async (user1, user2) => {
       //console.log(err)
     });
 
-  User.findByIdAndUpdate(user2, {$push: {matches: user1}})
+  User.findByIdAndUpdate(user2, { $push: { matches: user1 } })
     .then((res) => {
       //console.log(res)
     })
@@ -126,9 +129,9 @@ const addToMatchesList = async (user1, user2) => {
 };
 
 const updateDislikedBy = async (req, res) => {
-  const {user, dislikedUser} = req.body;
+  const { user, dislikedUser } = req.body;
 
-  User.findByIdAndUpdate(dislikedUser, {$push: {dislikedBy: user}})
+  User.findByIdAndUpdate(dislikedUser, { $push: { dislikedBy: user } })
     .then((status) => {
       res.send(status);
     })
@@ -138,7 +141,7 @@ const updateDislikedBy = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const {_id} = req.params;
+  const { _id } = req.params;
 
   User.findById(_id)
     .then((user) => {
@@ -150,7 +153,7 @@ const getUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const {email, password} = req.body;
+  const { email, password } = req.body;
 
   User.findOne({
     email,
@@ -160,36 +163,41 @@ const loginUser = async (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      res.send(401, "Invalid login credentials")
-    })
-}
+      res.send(401, "Invalid login credentials");
+    });
+};
 
-const filterUsers = async(req, res) => {
+const filterUsers = async (req, res) => {
   const {
     whoToDate, // array
     year, // array
     location, // array,
     drink, // bool
     smoke, // bool
-  } = req.body
+  } = req.body;
 
-  filtered = []
+  filtered = [];
 
   User.find()
     .then((users) => {
       users.filter((user) => {
-        if (whoToDate.includes(user.gender) && year.includes(user.year) && 
-            location.includes(user.location) && drink == user.drink && smoke == user.smoke) {
-          filtered.push(user)
-          return true
+        if (
+          (whoToDate.length === 0 || whoToDate.includes(user.gender)) &&
+          (year.length === 0 || year.includes(user.year)) &&
+          (location.length === 0 || location.includes(user.location)) &&
+          drink == user.drink &&
+          smoke == user.smoke
+        ) {
+          filtered.push(user);
+          return true;
         }
-      })
-      res.send(filtered)
+      });
+      res.send(filtered);
     })
     .catch((err) => {
-      res.send(err)
-    })
-}
+      res.send(err);
+    });
+};
 
 const sendVerificationEmail = async (email) => {
   let transporter = nodemailer.createTransport({
