@@ -20,8 +20,8 @@ class _discoverPageState extends State<discoverPage> {
     whoToDate: [], 
     year: [], 
     location: [], 
-    drink: false, 
-    smoke: false
+    drink: true, 
+    smoke: true
   ); // will change to true & true later
   User? user;
   late List<User> list_user;
@@ -42,10 +42,17 @@ class _discoverPageState extends State<discoverPage> {
     }
     n = list_user.length;
     print(list_user);
-    user = await GetUser.getUser(list_user[index].id);
-    if(mounted){
-      setState(() {});
+    if(n != 0) {
+      user = await GetUser.getUser(list_user[index].id);
+      if(mounted){
+        setState(() {});
+      }
     }
+    else {
+      AlertDialog alert = const AlertDialog(content: Text("No user can be found; try switching options"),);
+      showDialog(context: context, builder: (BuildContext context) {return alert;});
+    }
+
   }
 
   // _loadUser() async {
@@ -58,6 +65,7 @@ class _discoverPageState extends State<discoverPage> {
   Future<VoidCallback> handleLike() async {
     print(index);
     if(index <= n-1) {
+      // post like
       var new_user = await GetUser.getUser(list_user[index].id);
       setState(() {
         user = new_user;
@@ -76,6 +84,7 @@ class _discoverPageState extends State<discoverPage> {
   Future<VoidCallback> handleDisLike() async {
     print(index);
     if(index <= n-1) {
+      // post dislike
       var new_user = await GetUser.getUser(list_user[index].id);
       setState(() {
         user = new_user;

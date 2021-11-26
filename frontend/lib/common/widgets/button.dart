@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/values/values.dart';
-import 'package:bdate/common/controller/controller.dart';
 
 Widget forwardRoundButton(double width, double height, context, String route) {
   return Container(
@@ -14,7 +13,7 @@ Widget forwardRoundButton(double width, double height, context, String route) {
         },
         style: TextButton.styleFrom(
             backgroundColor: AppColors.primaryElement, shape: CircleBorder()),
-        child: Icon(
+        child: const Icon(
           Icons.arrow_forward_rounded,
           size: 24,
           color: AppColors.primaryElementText,
@@ -29,7 +28,7 @@ Widget likeButton(Function handleLike) {
     child: TextButton(
       onPressed: () => handleLike(),
       style: TextButton.styleFrom(backgroundColor: AppColors.primaryElement, shape: CircleBorder()),
-      child: Icon(
+      child: const Icon(
         Icons.favorite,
         color: AppColors.primaryElementText,
         size: 35,
@@ -37,11 +36,11 @@ Widget likeButton(Function handleLike) {
     ),
     decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(100),
-    boxShadow: [
+    boxShadow:  const [
       BoxShadow(
         color: Colors.grey,
         blurRadius: 2,
-        offset: Offset(4, 8), // Shadow position
+        offset: Offset(4, 8),
       ),
     ],
   ),
@@ -55,7 +54,7 @@ Widget dislikeButton(Function handleDisLike) {
     child: TextButton(
       onPressed: () => handleDisLike(),
       style: TextButton.styleFrom(backgroundColor: AppColors.primaryElementText, shape: CircleBorder()),
-      child: Icon(
+      child: const Icon(
         Icons.close,
         color: AppColors.primaryElement,
         size: 35,
@@ -63,11 +62,11 @@ Widget dislikeButton(Function handleDisLike) {
     ),
     decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(100),
-    boxShadow: [
+    boxShadow: const [
       BoxShadow(
         color: Colors.grey,
         blurRadius: 2,
-        offset: Offset(4, 8), // Shadow position
+        offset: Offset(4, 8),
       ),
     ],
   ),
@@ -76,13 +75,12 @@ Widget dislikeButton(Function handleDisLike) {
 
 Widget setButton(BuildContext context) {
   return Container(
-
     child: TextButton(
       onPressed: (){
         Navigator.pushNamed(context, "/setting");
       },
       style: TextButton.styleFrom(shape: CircleBorder()),
-      child: Icon(
+      child: const Icon(
         Icons.settings,
         color: Colors.grey,
         size: 24,
