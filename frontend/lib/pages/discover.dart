@@ -82,6 +82,10 @@ class _discoverPageState extends State<discoverPage> {
       });
       index += 1;
     }
+    else {
+      AlertDialog alert = const AlertDialog(content: Text("You reached the end of the world"),);
+      showDialog(context: context, builder: (BuildContext context) {return alert;});
+    }
     return () => setState(() {
     });
   }
