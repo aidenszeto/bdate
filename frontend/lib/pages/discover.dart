@@ -1,10 +1,12 @@
 import 'package:bdate/common/api/api.dart';
-import 'package:bdate/common/api/get_user.dart';
 import 'package:bdate/common/entity/entity.dart';
-import 'package:bdate/common/entity/user.dart';
 import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+
+
 class discoverPage extends StatefulWidget {
   const discoverPage({ Key? key }) : super(key: key);
 
@@ -13,6 +15,7 @@ class discoverPage extends StatefulWidget {
 }
 
 class _discoverPageState extends State<discoverPage> {
+
   Filter filter = Filter(
     whoToDate: [], 
     year: [], 
@@ -60,6 +63,10 @@ class _discoverPageState extends State<discoverPage> {
         user = new_user;
       });
       index += 1;
+    }
+    else {
+      AlertDialog alert = const AlertDialog(content: Text("You reached the end of the world"),);
+      showDialog(context: context, builder: (BuildContext context) {return alert;});
     }
     return () => setState(() {
     });
