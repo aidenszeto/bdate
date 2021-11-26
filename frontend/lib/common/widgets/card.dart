@@ -30,7 +30,7 @@ Widget card(User? user) {
               SizedBox(height: h(83)),
               Container(
                 child: Text(
-                  "${user?.age ?? 97}\n${user?.gender ?? "female"}\n${user?.ethnicity ?? "bear"}\n${user?.height ?? "mystery"}\n${user?.year ?? "have a guess"}\n${user?.location ?? "anywhere in UCLA"}\n${user?.major ?? "fun"}\n$smoke\n$drink\n", 
+                  "${user?.age ?? 97} years old\n${user?.gender ?? "female"}\n${user?.ethnicity ?? "bear"}\n${user?.height ?? "mystery"}\n${user?.year ?? "idk which"} year\nLives at ${user?.location ?? "anywhere in UCLA"}\n${user?.major ?? "fun"} major\n$smoke\n$drink\n", 
                   style: TextStyle(color: AppColors.primaryElementText, fontSize: f(18), fontWeight: FontWeight.w500, shadows: [Shadow(offset: Offset(2,2), color: Colors.grey, blurRadius: 1)]),
                   ), 
                 margin: EdgeInsets.only(left: h(24)),

@@ -13,6 +13,6 @@ router.post("/signup", User.addUser);
 router.put("/verify/:email", User.verifyUser);
 router.put("/likeduser", User.updateLikedBy);
 router.put("/dislikeduser", User.updateDislikedBy);
-router.get("/filter", User.filterUsers)
+router.post("/filter", User.filterUsers)
 
 module.exports = router;

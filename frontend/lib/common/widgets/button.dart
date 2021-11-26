@@ -71,4 +71,22 @@ Widget dislikeButton() {
       ),
     ],
   ),
-  );}
+  );
+}
+
+Widget setButton(BuildContext context) {
+  return Container(
+
+    child: TextButton(
+      onPressed: (){
+        Navigator.pushNamed(context, "/setting");
+      },
+      style: TextButton.styleFrom(shape: CircleBorder()),
+      child: Icon(
+        Icons.settings,
+        color: Colors.grey,
+        size: 24,
+      ),
+    ),
+  );
+}

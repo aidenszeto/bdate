@@ -1,10 +1,10 @@
 import 'dart:convert';
+
 import 'package:bdate/common/entity/entity.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
-class GetUser {
-  static Future<User> getUser(String id) async {
+class GetFilter {
+  static Future<List<User>> getFilter(Filter filter) async {
     BaseOptions bo = BaseOptions(
       connectTimeout: 10000,
       receiveTimeout: 5000,
@@ -12,7 +12,12 @@ class GetUser {
       responseType: ResponseType.json,
     );
     var dio = Dio(bo);
-    var response = await dio.request("http://localhost:8080/user/get/${id}");
-    return User.fromJson(response.data);
+    var response = await dio.post("http://localhost:8080/user/filter", data: filterToJson(filter));
+    List<User> result = [];
+    response.data.forEach((u) {
+      result.add(User.fromJson(u));
+    });
+    return result;
   }
+
 }

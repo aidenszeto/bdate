@@ -1,12 +1,16 @@
+// To parse this JSON data, do
+//
+//     final filteredUsers = filteredUsersFromJson(jsonString);
+
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
+List<FilteredUsers> filteredUsersFromJson(String str) => List<FilteredUsers>.from(json.decode(str).map((x) => FilteredUsers.fromJson(x)));
 
-String userToJson(User data) => json.encode(data.toJson());
+String filteredUsersToJson(List<FilteredUsers> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class User {
-    User({
+class FilteredUsers {
+    FilteredUsers({
         required this.id,
         required this.firstName,
         required this.lastName,
@@ -27,8 +31,8 @@ class User {
         required this.likedBy,
         required this.dislikedBy,
         required this.matches,
-        required this.v,
         required this.verified,
+        required this.v,
     });
 
     String id;
@@ -46,15 +50,15 @@ class User {
     bool smoke;
     bool drink;
     String photo;
-    String? instagram;
-    String? snapchat;
+    dynamic instagram;
+    dynamic snapchat;
     List<String> likedBy;
-    List<dynamic> dislikedBy;
+    List<String> dislikedBy;
     List<String> matches;
-    int v;
     bool verified;
+    int v;
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+    factory FilteredUsers.fromJson(Map<String, dynamic> json) => FilteredUsers(
         id: json["_id"],
         firstName: json["firstName"],
         lastName: json["lastName"],
@@ -73,10 +77,10 @@ class User {
         instagram: json["instagram"],
         snapchat: json["snapchat"],
         likedBy: List<String>.from(json["likedBy"].map((x) => x)),
-        dislikedBy: List<dynamic>.from(json["dislikedBy"].map((x) => x)),
+        dislikedBy: List<String>.from(json["dislikedBy"].map((x) => x)),
         matches: List<String>.from(json["matches"].map((x) => x)),
-        v: json["__v"],
         verified: json["verified"],
+        v: json["__v"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -100,7 +104,7 @@ class User {
         "likedBy": List<dynamic>.from(likedBy.map((x) => x)),
         "dislikedBy": List<dynamic>.from(dislikedBy.map((x) => x)),
         "matches": List<dynamic>.from(matches.map((x) => x)),
-        "__v": v,
         "verified": verified,
+        "__v": v,
     };
 }

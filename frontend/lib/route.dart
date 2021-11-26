@@ -1,3 +1,5 @@
+import 'package:bdate/pages/setting.dart';
+
 import 'pages/app.dart';
 import 'pages/login.dart';
 import 'pages/create/required_create.dart';
@@ -7,5 +9,6 @@ var staticRoutes = {
   "/login": (context) => LoginPage(),
   "/signup": (context) => CreatePage(),
   "/optional_create": (context) => CreateOptionalPage(),
-  "/application": (context) => AppPage()
+  "/application": (context) => AppPage(),
+  "/setting": (context) => settingPage(),
 };
