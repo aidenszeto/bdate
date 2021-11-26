@@ -27,7 +27,7 @@ Widget likeButton(Function handleLike) {
     width: h(78),
     height: h(78),
     child: TextButton(
-      onPressed: handleLike(),
+      onPressed: () => handleLike(),
       style: TextButton.styleFrom(backgroundColor: AppColors.primaryElement, shape: CircleBorder()),
       child: Icon(
         Icons.favorite,

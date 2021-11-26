@@ -22,6 +22,8 @@ class _discoverPageState extends State<discoverPage> {
   ); // will change to true & true later
   User? user;
   late List<User> list_user;
+  int index = 0;
+  int n = 0;
 
   @override
   void initState() {
@@ -35,21 +37,31 @@ class _discoverPageState extends State<discoverPage> {
     if(mounted){
       setState(() {});
     }
+    n = list_user.length;
     print(list_user);
-    user = await GetUser.getUser(list_user[1].id);
+    user = await GetUser.getUser(list_user[index].id);
     if(mounted){
       setState(() {});
     }
   }
 
-  _loadUser() async {
-    user = await GetUser.getUser(list_user[1].id);
-    if(mounted){
-      setState(() {});
-    }
-  }
+  // _loadUser() async {
+  //   user = await GetUser.getUser(list_user[1].id);
+  //   if(mounted){
+  //     setState(() {});
+  //   }
+  // }
 
-  VoidCallback handleLike() {
+  Future<VoidCallback> handleLike() async {
+    print(index);
+    print(n);
+    if(index <= n-1) {
+      var new_user = await GetUser.getUser(list_user[index].id);
+      setState(() {
+        user = new_user;
+      });
+      index += 1;
+    }
     return () => setState(() {
     });
   }
