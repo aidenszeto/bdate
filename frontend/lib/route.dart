@@ -8,7 +8,6 @@ import 'pages/create/optional_create.dart';
 var staticRoutes = {
   "/login": (context) => LoginPage(),
   "/signup": (context) => CreatePage(),
-  "/optional_create": (context) => CreateOptionalPage(),
   "/application": (context) => AppPage(),
   "/setting": (context) => settingPage(),
 };

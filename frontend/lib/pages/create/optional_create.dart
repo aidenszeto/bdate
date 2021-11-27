@@ -3,14 +3,33 @@ import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/values/values.dart';
 import 'package:bdate/common/widgets/widgets.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:roundcheckbox/roundcheckbox.dart';
+import 'package:bdate/common/api/post_user.dart';
+import 'package:bdate/common/entity/user.dart';
 
 import 'dart:io';
 
 class CreateOptionalPage extends StatefulWidget {
+  CreateOptionalPage({Key? key, @required required this.newUser})
+      : super(key: key);
+  CreateUser newUser = CreateUser(
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    age: 0,
+    gender: "",
+    ethnicity: "",
+    height: "",
+    year: "",
+    location: "",
+    major: "",
+    smoke: false,
+    drink: false,
+  );
+
   @override
   State<StatefulWidget> createState() {
-    return new CreateOptionalPageState();
+    return CreateOptionalPageState();
   }
 }
 
@@ -83,17 +102,26 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
           Container(
             width: w(303),
             margin: EdgeInsets.only(top: h(23)),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  "Create Account",
-                  style: TextStyle(
-                    fontSize: f(32),
-                  ),
+            child: TextButton(
+              onPressed: () {
+                widget.newUser.instagram = _instagram.text;
+                widget.newUser.snapchat = _snapchat.text;
+                var status = PostUser.postUser(widget.newUser);
+                print(status);
+                Navigator.pushNamed(context, "/application");
+              },
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.blue)))),
+              child: Text(
+                "Create Account",
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                  fontSize: f(25),
                 ),
-                Spacer(),
-                forwardRoundButton(45, 45, context, '/application'),
-              ],
+              ),
             ),
           ),
           Container(
