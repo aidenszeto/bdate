@@ -73,12 +73,10 @@ Widget dislikeButton(Function handleDisLike) {
   );
 }
 
-Widget setButton(BuildContext context) {
+Widget setButton(Function handleSetting) {
   return Container(
     child: TextButton(
-      onPressed: (){
-        Navigator.pushNamed(context, "/setting");
-      },
+      onPressed: () => handleSetting(),
       style: TextButton.styleFrom(shape: CircleBorder()),
       child: const Icon(
         Icons.settings,

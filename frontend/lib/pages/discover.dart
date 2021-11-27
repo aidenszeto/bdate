@@ -1,9 +1,9 @@
 import 'package:bdate/common/api/api.dart';
 import 'package:bdate/common/entity/entity.dart';
 import 'package:bdate/common/utils/utils.dart';
+import 'package:bdate/common/values/values.dart';
 import 'package:bdate/common/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -35,6 +35,7 @@ class _discoverPageState extends State<discoverPage> {
     super.initState();
 
   }
+
   _loadFilter() async {
     list_user = await GetFilter.getFilter(filter);
     if(mounted){
@@ -52,7 +53,6 @@ class _discoverPageState extends State<discoverPage> {
       AlertDialog alert = const AlertDialog(content: Text("No user can be found; try switching options"),);
       showDialog(context: context, builder: (BuildContext context) {return alert;});
     }
-
   }
 
   // _loadUser() async {
@@ -76,10 +76,8 @@ class _discoverPageState extends State<discoverPage> {
       AlertDialog alert = const AlertDialog(content: Text("You reached the end of the world"),);
       showDialog(context: context, builder: (BuildContext context) {return alert;});
     }
-    return () => setState(() {
-    });
+    return () => setState(() {});
   }
-
 
   Future<VoidCallback> handleDisLike() async {
     print(index);
@@ -95,8 +93,108 @@ class _discoverPageState extends State<discoverPage> {
       AlertDialog alert = const AlertDialog(content: Text("You reached the end of the world"),);
       showDialog(context: context, builder: (BuildContext context) {return alert;});
     }
-    return () => setState(() {
-    });
+    return () => setState(() {});
+  }
+
+  VoidCallback handleSetting() {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              actions: <Widget>[
+                Container(
+                  width: w(303),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Your search preferences",
+                          style: TextStyle(fontSize: f(20), fontWeight: FontWeight.w500, color: AppColors.primaryText),
+                        ),
+                        CheckboxListTile(
+                          value: filter.drink,
+                          title: Text("Want others drink?", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w500, color: AppColors.primaryText),),
+                          onChanged: (value){
+                            setState(() {
+                              filter.drink=value;
+                            });
+                          },
+                        ),
+                        CheckboxListTile(
+                          value: filter.smoke,
+                          title: Text("Want others smoke?", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w500, color: AppColors.primaryText),), 
+                          onChanged: (value){
+                            setState(() {
+                              filter.smoke=value;
+                            });
+                          },
+                        ),
+                        
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Material(
+                              elevation: 5.0,
+                              color: Colors.blue[900],
+                              child: MaterialButton(
+                                padding: EdgeInsets.fromLTRB(
+                                    10.0, 5.0, 10.0, 5.0),
+                                onPressed: () => _loadFilter(),
+                                child: Text("Save",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    )),
+                              ),
+                            ),
+                            Material(
+                              elevation: 5.0,
+                              color: Colors.blue[900],
+                              child: MaterialButton(
+                                padding: EdgeInsets.fromLTRB(
+                                    10.0, 5.0, 10.0, 5.0),
+                                onPressed: () {
+                                  setState(() {
+                                    Navigator.of(context).pop();
+                                  });
+                                },
+                                child: Text("Cancel",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    )),
+                              ),
+                            ),
+                            Material(
+                              elevation: 5.0,
+                              color: Colors.blue[900],
+                              child: MaterialButton(
+                                padding: EdgeInsets.fromLTRB(
+                                    10.0, 5.0, 10.0, 5.0),
+                                onPressed: () {},
+                                child: Text("Select All",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    )),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ))
+              ],
+            );
+          }
+        );
+      }
+    );
+    return () => setState(() {});
   }
 
   @override
@@ -113,7 +211,7 @@ class _discoverPageState extends State<discoverPage> {
               children: <Widget>[
                 dislikeButton(handleDisLike),
                 Spacer(),
-                setButton(context),
+                setButton(handleSetting),
                 Spacer(),
                 likeButton(handleLike)
               ],

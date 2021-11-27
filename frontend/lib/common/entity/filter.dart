@@ -17,8 +17,8 @@ class Filter {
     List<dynamic> whoToDate;
     List<dynamic> year;
     List<dynamic> location;
-    bool drink;
-    bool smoke;
+    bool? drink;
+    bool? smoke;
 
     factory Filter.fromJson(Map<String, dynamic> json) => Filter(
         whoToDate: List<dynamic>.from(json["whoToDate"].map((x) => x)),
