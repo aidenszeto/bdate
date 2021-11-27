@@ -105,89 +105,97 @@ class _discoverPageState extends State<discoverPage> {
             return AlertDialog(
               actions: <Widget>[
                 Container(
-                  width: w(303),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Your search preferences",
-                          style: TextStyle(fontSize: f(20), fontWeight: FontWeight.w500, color: AppColors.primaryText),
-                        ),
-                        CheckboxListTile(
-                          value: filter.drink,
-                          title: Text("Want others drink?", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w500, color: AppColors.primaryText),),
-                          onChanged: (value){
-                            setState(() {
-                              filter.drink=value;
-                            });
-                          },
-                        ),
-                        CheckboxListTile(
-                          value: filter.smoke,
-                          title: Text("Want others smoke?", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w500, color: AppColors.primaryText),), 
-                          onChanged: (value){
-                            setState(() {
-                              filter.smoke=value;
-                            });
-                          },
-                        ),
-                        
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Material(
-                              elevation: 5.0,
-                              color: Colors.blue[900],
-                              child: MaterialButton(
-                                padding: EdgeInsets.fromLTRB(
-                                    10.0, 5.0, 10.0, 5.0),
-                                onPressed: () => _loadFilter(),
-                                child: Text("Save",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                    )),
-                              ),
-                            ),
-                            Material(
-                              elevation: 5.0,
-                              color: Colors.blue[900],
-                              child: MaterialButton(
-                                padding: EdgeInsets.fromLTRB(
-                                    10.0, 5.0, 10.0, 5.0),
-                                onPressed: () {
-                                  setState(() {
-                                    Navigator.of(context).pop();
-                                  });
+                  width: w(350),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Your search preferences",
+                        style: TextStyle(fontSize: f(20), fontWeight: FontWeight.w500, color: AppColors.primaryText),
+                      ),
+                      CheckboxListTile(
+                        value: filter.drink,
+                        title: Text("Smoking", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),),
+                        subtitle: const Text("Want others smoke?"),
+                        secondary: const Icon(Icons.smoke_free),
+                        onChanged: (value){
+                          setState(() {
+                            filter.drink=value;
+                          });
+                        },
+                      ),
+                      CheckboxListTile(
+                        value: filter.smoke,
+                        title: Text("Drinking?", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),), 
+                        subtitle: const Text("Want others drink?"),
+                        secondary: const Icon(Icons.local_drink),
+                        onChanged: (value){
+                          setState(() {
+                            filter.smoke=value;
+                          });
+                        },
+                      ),
+                      
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Material(
+                            elevation: 5.0,
+                            color: Colors.blue[900],
+                            child: MaterialButton(
+                              padding: EdgeInsets.fromLTRB(
+                                  10.0, 5.0, 10.0, 5.0),
+                              onPressed: () {
+                                _loadFilter();
+                                index=0;
                                 },
-                                child: Text("Cancel",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                    )),
-                              ),
+                              child: Text("Save",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  )),
                             ),
-                            Material(
-                              elevation: 5.0,
-                              color: Colors.blue[900],
-                              child: MaterialButton(
-                                padding: EdgeInsets.fromLTRB(
-                                    10.0, 5.0, 10.0, 5.0),
-                                onPressed: () {},
-                                child: Text("Select All",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                    )),
-                              ),
+                          ),
+                          Material(
+                            elevation: 5.0,
+                            color: Colors.blue[900],
+                            child: MaterialButton(
+                              padding: EdgeInsets.fromLTRB(
+                                  10.0, 5.0, 10.0, 5.0),
+                              onPressed: () {
+                                setState(() {
+                                  Navigator.of(context).pop();
+                                });
+                              },
+                              child: Text("Cancel",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  )),
                             ),
-                          ],
-                        )
-                      ],
-                    ))
+                          ),
+                          Material(
+                            elevation: 5.0,
+                            color: Colors.blue[900],
+                            child: MaterialButton(
+                              padding: EdgeInsets.fromLTRB(
+                                  10.0, 5.0, 10.0, 5.0),
+                              onPressed: () {},
+                              child: Text("Select All",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  )),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                )
               ],
             );
           }
