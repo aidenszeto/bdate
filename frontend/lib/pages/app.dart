@@ -1,3 +1,4 @@
+import 'package:bdate/common/entity/user.dart';
 import 'package:bdate/common/values/values.dart';
 import 'package:bdate/pages/discover.dart';
 import 'package:bdate/pages/matches.dart';
@@ -7,14 +8,37 @@ import 'package:bdate/common/widgets/widgets.dart';
 import 'package:bdate/common/utils/utils.dart';
 
 class AppPage extends StatefulWidget {
-  const AppPage({ Key? key }) : super(key: key);
-
+  AppPage({Key? key, @required required this.curUser}) : super(key: key);
+  User curUser = User(
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    age: 0,
+    gender: "",
+    ethnicity: "",
+    height: "",
+    year: "",
+    location: "",
+    major: "",
+    smoke: false,
+    drink: false,
+    photo: "",
+    instagram: "",
+    snapchat: "",
+    likedBy: [],
+    dislikedBy: [],
+    matches: [],
+    v: 0,
+    verified: false,
+  );
 
   @override
   _AppPage createState() => _AppPage();
 }
 
-class _AppPage extends State<AppPage>  {
+class _AppPage extends State<AppPage> {
   int _page = 0;
   final List<BottomNavigationBarItem> _bottomTabs = <BottomNavigationBarItem>[
     new BottomNavigationBarItem(
@@ -47,7 +71,7 @@ class _AppPage extends State<AppPage>  {
         color: AppColors.tabBarElement,
       ),
       activeIcon: Icon(
-        Icons.supervised_user_circle ,
+        Icons.supervised_user_circle,
         color: AppColors.secondaryElementText,
       ),
       label: "profile",
@@ -62,7 +86,7 @@ class _AppPage extends State<AppPage>  {
     _pageController = PageController(initialPage: this._page);
   }
 
-   @override
+  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -78,6 +102,7 @@ class _AppPage extends State<AppPage>  {
       this._page = page;
     });
   }
+
   Widget _buildNavBar() {
     return BottomNavigationBar(
       items: _bottomTabs,
@@ -89,14 +114,11 @@ class _AppPage extends State<AppPage>  {
       showUnselectedLabels: false,
     );
   }
+
   Widget _buildBody() {
     return PageView(
       physics: NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        discoverPage(),
-        matchesPage(),
-        profilePage()
-      ],
+      children: <Widget>[discoverPage(), matchesPage(), profilePage()],
       controller: _pageController,
       onPageChanged: _handlePageChanged,
     );

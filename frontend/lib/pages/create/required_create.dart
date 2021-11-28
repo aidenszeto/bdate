@@ -40,6 +40,7 @@ class CreatePageState extends State<CreatePage> {
   }
 
   Widget _buildInputForm(context) {
+    final formGlobalKey = GlobalKey<FormState>();
     final TextEditingController _email = TextEditingController();
     final TextEditingController _paswd = TextEditingController();
     final TextEditingController _firstName = TextEditingController();
@@ -68,7 +69,8 @@ class CreatePageState extends State<CreatePage> {
       margin: EdgeInsets.only(top: h(50)),
       child: Column(
         children: [
-          requiredFields(required_controllers),
+          Form(key: formGlobalKey, child: requiredFields(required_controllers)),
+          //requiredFields(required_controllers),
           gendersWidget(),
           optionsWidget("Do you drink?", _doesDrink),
           optionsWidget("Do you smoke?", _doesSmoke),
@@ -77,28 +79,32 @@ class CreatePageState extends State<CreatePage> {
             margin: EdgeInsets.only(top: h(23)),
             child: TextButton(
               onPressed: () {
-                CreateUser user = CreateUser(
-                  firstName: _firstName.text,
-                  lastName: _lastName.text,
-                  email: _email.text,
-                  password: _paswd.text,
-                  age: int.parse(_age.text),
-                  gender: gender,
-                  ethnicity: _ethnicity.text,
-                  height: _height.text,
-                  year: _year.text,
-                  location: _location.text,
-                  major: _major.text,
-                  smoke: _doesSmoke.value,
-                  drink: _doesDrink.value,
-                );
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CreateOptionalPage(
-                        newUser: user,
-                      ),
-                    ));
+                if (formGlobalKey.currentState != null &&
+                    formGlobalKey.currentState!.validate()) {
+                  formGlobalKey.currentState!.save();
+                  CreateUser user = CreateUser(
+                    firstName: _firstName.text,
+                    lastName: _lastName.text,
+                    email: _email.text,
+                    password: _paswd.text,
+                    age: int.parse(_age.text),
+                    gender: gender,
+                    ethnicity: _ethnicity.text,
+                    height: _height.text,
+                    year: _year.text,
+                    location: _location.text,
+                    major: _major.text,
+                    smoke: _doesSmoke.value,
+                    drink: _doesDrink.value,
+                  );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateOptionalPage(
+                          newUser: user,
+                        ),
+                      ));
+                }
               },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(

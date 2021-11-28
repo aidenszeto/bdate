@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/values/values.dart';
 import 'package:bdate/common/widgets/widgets.dart';
+import 'package:bdate/pages/app.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bdate/common/api/post_user.dart';
 import 'package:bdate/common/entity/user.dart';
@@ -103,12 +105,21 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
             width: w(303),
             margin: EdgeInsets.only(top: h(23)),
             child: TextButton(
-              onPressed: () {
+              onPressed: () async {
                 widget.newUser.instagram = _instagram.text;
                 widget.newUser.snapchat = _snapchat.text;
-                var status = PostUser.postUser(widget.newUser);
-                print(status);
-                Navigator.pushNamed(context, "/application");
+                var res = await PostUser.createAccount(widget.newUser);
+                if (res != null) {
+                  // TODO::backend needs to send 400 if can't create account
+                  User curUser = res;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AppPage(
+                          curUser: curUser,
+                        ),
+                      ));
+                }
               },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(

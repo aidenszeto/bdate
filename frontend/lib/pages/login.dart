@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/values/values.dart';
 import 'package:bdate/common/widgets/widgets.dart';
+import 'package:bdate/common/api/post_user.dart';
+import 'package:bdate/common/entity/user.dart';
+import 'package:bdate/pages/app.dart';
 
 final TextEditingController _email = TextEditingController();
 final TextEditingController _paswd = TextEditingController();
@@ -64,17 +67,37 @@ Widget _buildInputForm(context) {
           width: w(303),
           margin: EdgeInsets.only(top: h(23)),
           child: Container(
-            child: Row(
-              children: <Widget>[
-                Text(
-                  "Sign In",
-                  style: TextStyle(
-                    fontSize: f(32),
-                  ),
+            width: w(303),
+            margin: EdgeInsets.only(top: h(23)),
+            child: TextButton(
+              onPressed: () async {
+                LoginUser user =
+                    LoginUser(email: _email.text, password: _paswd.text);
+                var res = await PostUser.login(user);
+                if (res != null) {
+                  // TODO::backend needs to send 400 if can't login
+                  User curUser = res;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AppPage(
+                          curUser: curUser,
+                        ),
+                      ));
+                }
+              },
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.blue)))),
+              child: Text(
+                "Login",
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                  fontSize: f(25),
                 ),
-                Spacer(),
-                forwardRoundButton(45, 45, context, "/application"),
-              ],
+              ),
             ),
           ),
         ),

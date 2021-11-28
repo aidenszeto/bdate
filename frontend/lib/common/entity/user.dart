@@ -5,6 +5,8 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 
 String userToJson(CreateUser data) => json.encode(data.toJson());
 
+String loginToJson(LoginUser data) => json.encode(data.toJson());
+
 class User {
   User({
     required this.id,
@@ -147,5 +149,20 @@ class CreateUser {
         "drink": drink,
         "instagram": instagram,
         "snapchat": snapchat,
+      };
+}
+
+class LoginUser {
+  LoginUser({
+    required this.email,
+    required this.password,
+  });
+
+  String email;
+  String password;
+
+  Map<String, dynamic> toJson() => {
+        "email": email,
+        "password": password,
       };
 }

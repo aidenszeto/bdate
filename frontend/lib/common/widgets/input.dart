@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/values/values.dart';
+import 'package:bdate/common/validators/input_validators.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 
 class PrimitiveWrapper {
@@ -14,6 +15,7 @@ Widget InputTextEdit(
     TextInputType keyboardType = TextInputType.text,
     required String hintText,
     bool isPassword = false,
+    bool isNumber = false,
     double marginTop = 15}) {
   return Container(
     height: h(60),
@@ -22,7 +24,7 @@ Widget InputTextEdit(
       color: AppColors.secondaryElement,
       borderRadius: BorderRadius.circular(20),
     ),
-    child: TextField(
+    child: TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
@@ -30,6 +32,14 @@ Widget InputTextEdit(
         contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 9),
         border: InputBorder.none,
       ),
+      validator: (input) {
+        if (input != null) {
+          if (isNumber ? isNumberValid(input) : isTextValid(input)) {
+            return null;
+          }
+        }
+        return isNumber ? "Must input an integer" : "Field can't be empty";
+      },
       style: TextStyle(
         color: AppColors.primaryText,
         fontFamily: "Avenir",
@@ -52,7 +62,6 @@ Widget requiredFields(List<TextEditingController> controllers) {
           controller: controllers[0],
           keyboardType: TextInputType.name,
           hintText: "Your First Name",
-          marginTop: 0,
         ),
         InputTextEdit(
           controller: controllers[1],
@@ -73,6 +82,7 @@ Widget requiredFields(List<TextEditingController> controllers) {
           controller: controllers[4],
           keyboardType: TextInputType.number,
           hintText: "Age",
+          isNumber: true,
         ),
         InputTextEdit(
           controller: controllers[5],
@@ -88,6 +98,7 @@ Widget requiredFields(List<TextEditingController> controllers) {
           controller: controllers[7],
           keyboardType: TextInputType.number,
           hintText: "Graduation Year",
+          isNumber: true,
         ),
         InputTextEdit(
           controller: controllers[8],
