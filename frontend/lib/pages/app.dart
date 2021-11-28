@@ -41,7 +41,7 @@ class AppPage extends StatefulWidget {
 class _AppPage extends State<AppPage> {
   int _page = 0;
   final List<BottomNavigationBarItem> _bottomTabs = <BottomNavigationBarItem>[
-    new BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.crop_portrait_rounded,
         color: AppColors.tabBarElement,
@@ -53,7 +53,7 @@ class _AppPage extends State<AppPage> {
       label: "discover",
       backgroundColor: AppColors.primaryBackground,
     ),
-    new BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.favorite_border_outlined,
         color: AppColors.tabBarElement,
@@ -65,7 +65,7 @@ class _AppPage extends State<AppPage> {
       label: "matches",
       backgroundColor: AppColors.primaryBackground,
     ),
-    new BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.supervised_user_circle_outlined,
         color: AppColors.tabBarElement,
