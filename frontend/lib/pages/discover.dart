@@ -20,11 +20,11 @@ class _discoverPageState extends State<discoverPage> {
     whoToDate: [], 
     year: [], 
     location: [], 
-    drink: true, 
-    smoke: true
-  ); // will change to true & true later
+    drink: false, 
+    smoke: false
+  ); 
   User? user;
-  late List<User> list_user;
+  late List<User> listuser;
   int index = 0;
   int n = 0;
   final TextEditingController _place = TextEditingController();
@@ -35,49 +35,41 @@ class _discoverPageState extends State<discoverPage> {
   @override
   void initState() {
     _loadFilter().whenComplete((){setState(() {});});
-    // _loadUser().whenComplete((){setState(() {});});
     super.initState();
-
   }
 
   @override
   void dispose() {
     _place.dispose();
+    _gender.dispose();
+    _year.dispose();
     super.dispose();
   }
 
   _loadFilter() async {
-    list_user = await GetFilter.getFilter(filter);
+    listuser = await GetFilter.getFilter(filter);
     if(mounted){
       setState(() {});
     }
-    n = list_user.length;
+    n = listuser.length;
     if(n != 0) {
-      user = await GetUser.getUser(list_user[index].id);
+      user = await GetUser.getUser(listuser[index].id);
       if(mounted){
         setState(() {});
       }
     }
     else {
-      AlertDialog alert = const AlertDialog(content: Text("No user can be found; try switching options"),);
+      AlertDialog alert = const AlertDialog(content: Text("No user can be found with your current options.\nTry switching options"),);
       showDialog(context: context, builder: (BuildContext context) {return alert;});
     }
   }
 
-  // _loadUser() async {
-  //   user = await GetUser.getUser(list_user[1].id);
-  //   if(mounted){
-  //     setState(() {});
-  //   }
-  // }
-
   Future<VoidCallback> handleLike() async {
-    print(index);
     if(index <= n-1) {
       // post like
-      var new_user = await GetUser.getUser(list_user[index].id);
+      var newuser = await GetUser.getUser(listuser[index].id);
       setState(() {
-        user = new_user;
+        user = newuser;
       });
       index += 1;
     }
@@ -89,12 +81,11 @@ class _discoverPageState extends State<discoverPage> {
   }
 
   Future<VoidCallback> handleDisLike() async {
-    print(index);
     if(index <= n-1) {
       // post dislike
-      var new_user = await GetUser.getUser(list_user[index].id);
+      var newuser = await GetUser.getUser(listuser[index].id);
       setState(() {
-        user = new_user;
+        user = newuser;
       });
       index += 1;
     }
@@ -131,7 +122,7 @@ class _discoverPageState extends State<discoverPage> {
                         child: CheckboxListTile(
                           value: filter.drink,
                           title: Text("Smoking", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),),
-                          secondary:  Icon(Icons.smoke_free,),
+                          secondary:  const Icon(Icons.smoke_free,),
                           onChanged: (value){
                             setState(() {
                               filter.drink=value;
@@ -148,7 +139,7 @@ class _discoverPageState extends State<discoverPage> {
                         child: CheckboxListTile(
                           value: filter.smoke,
                           title: Text("Drinking", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),), 
-                          secondary:  Icon(Icons.local_drink),
+                          secondary:  const Icon(Icons.local_drink),
                           onChanged: (value){
                             setState(() {
                               filter.smoke=value;
@@ -165,13 +156,14 @@ class _discoverPageState extends State<discoverPage> {
                         child: TextField(
                           controller: _place,
                           autocorrect: false,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Add a place you want to date",
                             contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 9),
                             border: InputBorder.none,
                           ),
                           style: TextStyle(
                             fontSize: f(12),
+                            color: AppColors.primaryText
                           ),
                         ),
                       ),
@@ -184,13 +176,14 @@ class _discoverPageState extends State<discoverPage> {
                         child: TextField(
                           controller: _year,
                           autocorrect: false,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Add a year you want to date",
                             contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 9),
                             border: InputBorder.none,
                           ),
                           style: TextStyle(
                             fontSize: f(12),
+                            color: AppColors.primaryText,
                           ),
                         ),
                       ),
@@ -203,13 +196,14 @@ class _discoverPageState extends State<discoverPage> {
                         child: TextField(
                           controller: _gender,
                           autocorrect: false,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Add a gender you want to date",
                             contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 9),
                             border: InputBorder.none,
                           ),
                           style: TextStyle(
                             fontSize: f(12),
+                            color: AppColors.primaryText
                           ),
                         ),
                       ),
