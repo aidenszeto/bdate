@@ -27,6 +27,10 @@ class _discoverPageState extends State<discoverPage> {
   late List<User> list_user;
   int index = 0;
   int n = 0;
+  final TextEditingController _place = TextEditingController();
+  final TextEditingController _year = TextEditingController();
+  final TextEditingController _gender = TextEditingController();
+
 
   @override
   void initState() {
@@ -36,13 +40,18 @@ class _discoverPageState extends State<discoverPage> {
 
   }
 
+  @override
+  void dispose() {
+    _place.dispose();
+    super.dispose();
+  }
+
   _loadFilter() async {
     list_user = await GetFilter.getFilter(filter);
     if(mounted){
       setState(() {});
     }
     n = list_user.length;
-    print(list_user);
     if(n != 0) {
       user = await GetUser.getUser(list_user[index].id);
       if(mounted){
@@ -113,86 +122,133 @@ class _discoverPageState extends State<discoverPage> {
                         "Your search preferences",
                         style: TextStyle(fontSize: f(20), fontWeight: FontWeight.w500, color: AppColors.primaryText),
                       ),
-                      CheckboxListTile(
-                        value: filter.drink,
-                        title: Text("Smoking", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),),
-                        subtitle: const Text("Want others smoke?"),
-                        secondary: const Icon(Icons.smoke_free),
-                        onChanged: (value){
-                          setState(() {
-                            filter.drink=value;
-                          });
-                        },
+                      Container(
+                        margin: EdgeInsets.all(h(5)),
+                        decoration: BoxDecoration(
+                          color: AppColors.secondaryElement,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: CheckboxListTile(
+                          value: filter.drink,
+                          title: Text("Smoking", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),),
+                          secondary:  Icon(Icons.smoke_free,),
+                          onChanged: (value){
+                            setState(() {
+                              filter.drink=value;
+                            });
+                          },
+                        ),
                       ),
-                      CheckboxListTile(
-                        value: filter.smoke,
-                        title: Text("Drinking?", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),), 
-                        subtitle: const Text("Want others drink?"),
-                        secondary: const Icon(Icons.local_drink),
-                        onChanged: (value){
-                          setState(() {
-                            filter.smoke=value;
-                          });
-                        },
+                      Container(
+                        margin: EdgeInsets.all(h(5)),
+                        decoration: BoxDecoration(
+                          color: AppColors.secondaryElement,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: CheckboxListTile(
+                          value: filter.smoke,
+                          title: Text("Drinking", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),), 
+                          secondary:  Icon(Icons.local_drink),
+                          onChanged: (value){
+                            setState(() {
+                              filter.smoke=value;
+                            });
+                          },
+                        ),
                       ),
-                      
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Material(
-                            elevation: 5.0,
-                            color: Colors.blue[900],
-                            child: MaterialButton(
-                              padding: EdgeInsets.fromLTRB(
-                                  10.0, 5.0, 10.0, 5.0),
-                              onPressed: () {
-                                _loadFilter();
-                                index=0;
-                                },
-                              child: Text("Save",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  )),
-                            ),
+                      Container(
+                        margin: EdgeInsets.all(h(5)),
+                        decoration: BoxDecoration(
+                          color: AppColors.secondaryElement,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: TextField(
+                          controller: _place,
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                            hintText: "Add a place you want to date",
+                            contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 9),
+                            border: InputBorder.none,
                           ),
-                          Material(
-                            elevation: 5.0,
-                            color: Colors.blue[900],
-                            child: MaterialButton(
-                              padding: EdgeInsets.fromLTRB(
-                                  10.0, 5.0, 10.0, 5.0),
+                          style: TextStyle(
+                            fontSize: f(12),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(h(5)),
+                        decoration: BoxDecoration(
+                          color: AppColors.secondaryElement,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: TextField(
+                          controller: _year,
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                            hintText: "Add a year you want to date",
+                            contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 9),
+                            border: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: f(12),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(h(5)),
+                        decoration: BoxDecoration(
+                          color: AppColors.secondaryElement,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: TextField(
+                          controller: _gender,
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                            hintText: "Add a gender you want to date",
+                            contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 9),
+                            border: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: f(12),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: w(200),
+                        child: Row(
+                          children: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                index=0;
+                                filter.location = [];
+                                if(_place.text != "") {
+                                  filter.location.add(_place.text);
+                                }
+                                filter.year = [];
+                                if(_year.text != "") {
+                                  filter.year.add(_year.text);
+                                }
+                                filter.whoToDate = [];
+                                if(_gender.text != "") {
+                                  filter.whoToDate.add(_gender.text);
+                                }
+                                _loadFilter();
+                                Navigator.of(context).pop();
+                              }, 
+                              child: Text("save", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryElement),),
+                            ),
+                            const Spacer(),
+                            TextButton(
                               onPressed: () {
                                 setState(() {
                                   Navigator.of(context).pop();
                                 });
-                              },
-                              child: Text("Cancel",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  )),
+                              }, 
+                              child: Text("cancel", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryElement),),
                             ),
-                          ),
-                          Material(
-                            elevation: 5.0,
-                            color: Colors.blue[900],
-                            child: MaterialButton(
-                              padding: EdgeInsets.fromLTRB(
-                                  10.0, 5.0, 10.0, 5.0),
-                              onPressed: () {},
-                              child: Text("Select All",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  )),
-                            ),
-                          ),
-                        ],
-                      )
+                          ],
+                        ),
+                      ),
                     ],
                   )
                 )
