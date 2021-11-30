@@ -1,6 +1,8 @@
 import 'package:bdate/common/entity/user.dart';
+import 'package:bdate/pages/discover.dart';
 import 'package:flutter/material.dart';
 import 'package:bdate/common/api/api.dart';
+import 'package:bdate/common/values/values.dart';
 import 'package:bdate/pages/app.dart';
 import 'dart:convert';
 
@@ -11,9 +13,34 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class matchesPage extends StatefulWidget {
   List<String> matchesIds;
 
-  matchesPage({Key? key, required matches})
-      : matchesIds = matches,
+  matchesPage({Key? key, @required required this.curUser})
+      : matchesIds = curUser.matches,
         super(key: key);
+
+  User curUser = User(
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    age: 0,
+    gender: "",
+    ethnicity: "",
+    height: "",
+    year: "",
+    location: "",
+    major: "",
+    smoke: false,
+    drink: false,
+    photo: "",
+    instagram: "",
+    snapchat: "",
+    likedBy: [],
+    dislikedBy: [],
+    matches: [],
+    v: 0,
+    verified: false,
+  );
   @override
   _matchesPageState createState() => _matchesPageState();
 }
@@ -21,11 +48,13 @@ class matchesPage extends StatefulWidget {
 class _matchesPageState extends State<matchesPage> {
   List<User> new_list = [];
   List<String> ids = [];
+  //User? u;
 
   //User? user;
 
   initState() {
-    ids = widget.matchesIds;
+    ids = widget.curUser.matches;
+    //u = widget.curUser;
     super.initState();
     _getUserData().then((value) {
       setState(() {});
@@ -83,17 +112,18 @@ class _matchesPageState extends State<matchesPage> {
         body: Center(
             child: SingleChildScrollView(
                 child: Column(
-      children: getList(_title(), new_list),
+      children: getList(new_list, context, widget.curUser),
     ))));
   }
 }
 
-List<Widget> getList(Widget w, List<User> users) {
+List<Widget> getList(List<User> users, BuildContext b, User usr) {
   List<Widget> childs = [];
-  childs.add(w);
+  childs.add(_title());
   for (var i = 0; i < users.length; i++) {
     childs.add(card(users[i]));
   }
+  childs.add(_buildSignUp(b, usr));
   return childs;
 }
 
@@ -115,82 +145,23 @@ Widget _title() {
           )));
 }
 
-/*class matchesPage extends StatelessWidget {
-  List<User> new_list = [];
-
-  matchesPage({Key? key}) : super(key: key);
-
-  _getMatchesData() async {
-    var response = await GetUser.getUser('619ae978dd241249abd866fc');
-    new_list.add(response);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StatefulWrapper(
-      onInit: () {
-        _getMatchesData().then((value) {
-          print('Async done');
-          print(new_list[0].firstName);
-          child:
-          Container();
-        });
-      },
-      child: Container(
-          child: Column(
-        children: <Widget>[_title(), card(new_list[0])],
-      )),
-    );
-    ScreenUtil.init(
-      BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width,
-          maxHeight: MediaQuery.of(context).size.height),
-      designSize: Size(375, 812),
-    );
-    return Scaffold(
-      body: Center(
-        child: Container(
-            child: Column(
-          children: <Widget>[_title(), for (var usr in new_list) card(usr)],
-        )),
-      ),
-    );
-  }
-}
-
-class StatefulWrapper extends StatefulWidget {
-  final Function onInit;
-  final Widget child;
-  const StatefulWrapper({required this.onInit, required this.child});
-  @override
-  _StatefulWrapperState createState() => _StatefulWrapperState();
-}
-
-class _StatefulWrapperState extends State<StatefulWrapper> {
-  @override
-  void initState() {
-    if (widget.onInit != null) {
-      widget.onInit();
-    }
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.child;
-  }
-}
-
-Widget _title() {
+Widget _buildSignUp(context, User usr) {
   return Container(
-      //margin: EdgeInsets.only(top: h(50)),
-      child: const Text("Matches",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: "Montserrat",
-            fontWeight: FontWeight.w600,
-            fontSize: 30,
-            height: 1,
-          )));
+      margin: EdgeInsets.only(bottom: h(48)),
+      child: ElevatedButton(
+          child: Text(
+            "Discover",
+            style: TextStyle(
+                color: Colors.white,
+                backgroundColor: Colors.blue,
+                fontSize: f(18)),
+          ),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => discoverPage(
+                          curUser: usr,
+                        )));
+          }));
 }
-*/
