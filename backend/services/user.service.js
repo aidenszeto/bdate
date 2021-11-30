@@ -33,6 +33,11 @@ const addUser = async (req, res) => {
     matches,
   } = req.body;
 
+  const existingUser = User.find({ email })
+  if (existingUser) {
+    res.send(400, "Email already registered")
+  }
+
   const user = new User({
     firstName,
     lastName,
@@ -71,7 +76,7 @@ const addUser = async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.send(err);
+      res.send(400, "Couldn't sign up user");
     });
 };
 
@@ -160,10 +165,13 @@ const loginUser = async (req, res) => {
     password,
   })
     .then((user) => {
+      if (!user) {
+        res.send(400, "Invalid login credentials")
+      }
       res.send(user);
     })
     .catch((err) => {
-      res.send(401, "Invalid login credentials");
+      res.send(500, "Error with request");
     });
 };
 
