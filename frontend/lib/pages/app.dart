@@ -118,7 +118,11 @@ class _AppPage extends State<AppPage> {
   Widget _buildBody() {
     return PageView(
       physics: NeverScrollableScrollPhysics(),
-      children: <Widget>[discoverPage(), matchesPage(), profilePage()],
+      children: <Widget>[
+        discoverPage(),
+        matchesPage(matches: widget.curUser.matches),
+        profilePage()
+      ],
       controller: _pageController,
       onPageChanged: _handlePageChanged,
     );
