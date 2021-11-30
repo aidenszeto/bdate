@@ -9,6 +9,7 @@ router.get("/get/:_id", User.getUser);
 
 router.post("/login", User.loginUser);
 router.post("/signup", User.addUser);
+router.put("/update/:_id", User.updateUser);
 
 router.put("/verify/:email", User.verifyUser);
 router.put("/likeduser", User.updateLikedBy);

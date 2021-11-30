@@ -5,16 +5,15 @@ import 'package:bdate/common/utils/utils.dart';
 Widget card(User? user) {
   String smoke = user?.smoke ?? false ? "Smokes" : "Doesn't Smoke";
   String drink = user?.drink ?? false ? "Drinks" : "Doesn't Drink";
-  String verified = user?.verified ?? true ? "Verified " : "";
-  String jb = "https://scontent-lax3-1.xx.fbcdn.net/v/t39.30808-6/256226769_306626027952781_4469855532132233091_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=lV4tn-5rt6gAX_7NwGl&_nc_ht=scontent-lax3-1.xx&oh=936888099a717f23d920bebe709c05ea&oe=61A50B98";
+  String joebruinpic = "https://images2.minutemediacdn.com/image/fetch/c_fill,g_auto,f_auto,h_560,w_850/https%3A%2F%2Fgojoebruin.com%2Fwp-content%2Fuploads%2Fgetty-images%2F2018%2F03%2F930139338-ucla-v-arizona.jpg.jpg";
   return Container(
     margin: EdgeInsets.only(top: h(60)),
-    width: w(267),
+    width: w(287),
     height: h(536),
     child: Stack(
       fit: StackFit.expand,
       children: <Widget>[
-        ClipRRect(borderRadius: BorderRadius.all(Radius.circular(15)), child: Image.network("${user?.photo ?? jb}", fit: BoxFit.fitHeight,)),   
+        ClipRRect(borderRadius: BorderRadius.all(Radius.circular(15)), child: Image.network("${user?.photo ?? joebruinpic}", fit: BoxFit.fitHeight,)),   
         SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,17 +21,12 @@ Widget card(User? user) {
               SizedBox(height: h(435)),
               Container(
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
                       "${user?.firstName ?? "Joe"} ${user?.lastName ?? "Bruin"} ", 
-                      style: TextStyle(color: AppColors.primaryElementText, fontSize: f(32), fontWeight: FontWeight.w500, shadows: [Shadow(offset: Offset(2,2), color: Colors.grey, blurRadius: 1)] ),
+                      style: TextStyle(color: AppColors.primaryElementText, fontSize: f(28), fontWeight: FontWeight.w500, shadows: [Shadow(offset: Offset(2,2), color: Colors.grey, blurRadius: 1)] ),
                     ),
-                    Text(
-                      "$verified",
-                      style: TextStyle(color: Colors.green, fontSize: f(12)),
-                    )
+                    user?.verified ?? true ? Icon(Icons.check, color: Colors.green,) : Icon(Icons.close, color: Colors.red,),
                   ],
                 ), 
                 margin: EdgeInsets.only(left: h(13)),

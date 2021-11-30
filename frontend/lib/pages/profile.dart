@@ -2,12 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/values/values.dart';
 import 'package:bdate/common/widgets/widgets.dart';
+import 'package:bdate/common/entity/user.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'dart:io';
 
 class profilePage extends StatefulWidget {
-  const profilePage({Key? key}) : super(key: key);
+  profilePage({Key? key, @required required this.curUser}) : super(key: key);
+  User curUser = User(
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    age: 0,
+    gender: "",
+    ethnicity: "",
+    height: "",
+    year: "",
+    location: "",
+    major: "",
+    smoke: false,
+    drink: false,
+    photo: "",
+    instagram: "",
+    snapchat: "",
+    likedBy: [],
+    dislikedBy: [],
+    matches: [],
+    v: 0,
+    verified: false,
+  );
 
   @override
   _profilePageState createState() => _profilePageState();
@@ -61,20 +86,36 @@ class _profilePageState extends State<profilePage> {
 
   Widget _buildInputForm(context) {
     final TextEditingController _email = TextEditingController();
+    _email.text = widget.curUser.email;
     final TextEditingController _paswd = TextEditingController();
-    final TextEditingController _name = TextEditingController();
+    _paswd.text = widget.curUser.password;
+    final TextEditingController _firstName = TextEditingController();
+    _firstName.text = widget.curUser.firstName;
+    final TextEditingController _lastName = TextEditingController();
+    _lastName.text = widget.curUser.lastName;
     final TextEditingController _age = TextEditingController();
+    _age.text = widget.curUser.age.toString();
     final TextEditingController _ethnicity = TextEditingController();
+    _ethnicity.text = widget.curUser.ethnicity;
     final TextEditingController _height = TextEditingController();
+    _height.text = widget.curUser.height;
     final TextEditingController _year = TextEditingController();
+    _year.text = widget.curUser.year;
     final TextEditingController _location = TextEditingController();
+    _location.text = widget.curUser.location;
     final TextEditingController _major = TextEditingController();
+    _major.text = widget.curUser.major;
     final TextEditingController _instagram = TextEditingController();
+    _instagram.text =
+        (widget.curUser.instagram != null) ? widget.curUser.instagram! : "";
     final TextEditingController _snapchat = TextEditingController();
+    _snapchat.text =
+        (widget.curUser.snapchat != null) ? widget.curUser.snapchat! : "";
     required_controllers = [
+      _firstName,
+      _lastName,
       _email,
       _paswd,
-      _name,
       _age,
       _ethnicity,
       _height,
@@ -151,7 +192,8 @@ class _profilePageState extends State<profilePage> {
     XFile? fileName = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _specifyImage = true;
-      _chosenImage = File(fileName!.path);
+      _chosenImage =
+          File(fileName!.path); // this is absolute path on user's simulator
     });
   }
 }
