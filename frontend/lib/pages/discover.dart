@@ -8,8 +8,31 @@ import 'package:flutter/material.dart';
 
 
 class discoverPage extends StatefulWidget {
-  const discoverPage({ Key? key }) : super(key: key);
-
+  discoverPage({ Key? key , required this.curUser}) : super(key: key);
+  User curUser = User(
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    age: 0,
+    gender: "",
+    ethnicity: "",
+    height: "",
+    year: "",
+    location: "",
+    major: "",
+    smoke: false,
+    drink: false,
+    photo: "",
+    instagram: "",
+    snapchat: "",
+    likedBy: [],
+    dislikedBy: [],
+    matches: [],
+    v: 0,
+    verified: false,
+  );
   @override
   _discoverPageState createState() => _discoverPageState();
 }
@@ -67,6 +90,7 @@ class _discoverPageState extends State<discoverPage> {
   Future<VoidCallback> handleLike() async {
     if(index <= n-1) {
       // post like
+      print(widget.curUser.id);
       var newuser = await GetUser.getUser(listuser[index].id);
       setState(() {
         user = newuser;
@@ -83,6 +107,7 @@ class _discoverPageState extends State<discoverPage> {
   Future<VoidCallback> handleDisLike() async {
     if(index <= n-1) {
       // post dislike
+      
       var newuser = await GetUser.getUser(listuser[index].id);
       setState(() {
         user = newuser;

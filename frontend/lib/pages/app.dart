@@ -119,7 +119,7 @@ class _AppPage extends State<AppPage> {
     return PageView(
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        discoverPage(),
+        discoverPage(curUser: widget.curUser,),
         matchesPage(),
         profilePage(
           curUser: widget.curUser,
