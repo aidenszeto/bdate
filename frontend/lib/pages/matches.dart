@@ -1,5 +1,6 @@
 import 'package:bdate/common/entity/user.dart';
 import 'package:bdate/pages/discover.dart';
+import 'package:bdate/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:bdate/common/api/api.dart';
 import 'package:bdate/common/values/values.dart';
@@ -123,7 +124,7 @@ List<Widget> getList(List<User> users, BuildContext b, User usr) {
   for (var i = 0; i < users.length; i++) {
     childs.add(card(users[i]));
   }
-  childs.add(_buildSignUp(b, usr));
+  childs.add(_buildButtons(b, usr));
   return childs;
 }
 
@@ -145,23 +146,44 @@ Widget _title() {
           )));
 }
 
-Widget _buildSignUp(context, User usr) {
+Widget _buildButtons(context, User usr) {
   return Container(
-      margin: EdgeInsets.only(bottom: h(48)),
-      child: ElevatedButton(
-          child: Text(
-            "Discover",
-            style: TextStyle(
-                color: Colors.white,
-                backgroundColor: Colors.blue,
-                fontSize: f(18)),
-          ),
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => discoverPage(
-                          curUser: usr,
-                        )));
-          }));
+      margin: EdgeInsets.all(h(48)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => discoverPage(
+                              curUser: usr,
+                            )));
+              },
+              child: Text(
+                'Discover',
+                style: TextStyle(
+                    color: Colors.white,
+                    backgroundColor: Colors.blue,
+                    fontSize: f(18)),
+              )),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => profilePage(
+                              curUser: usr,
+                            )));
+              },
+              child: Text(
+                'Profile',
+                style: TextStyle(
+                    color: Colors.white,
+                    backgroundColor: Colors.blue,
+                    fontSize: f(18)),
+              ))
+        ],
+      ));
 }
