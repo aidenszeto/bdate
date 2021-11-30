@@ -8,7 +8,7 @@ Widget card(User? user) {
   String joebruinpic = "https://images2.minutemediacdn.com/image/fetch/c_fill,g_auto,f_auto,h_560,w_850/https%3A%2F%2Fgojoebruin.com%2Fwp-content%2Fuploads%2Fgetty-images%2F2018%2F03%2F930139338-ucla-v-arizona.jpg.jpg";
   return Container(
     margin: EdgeInsets.only(top: h(60)),
-    width: w(267),
+    width: w(287),
     height: h(536),
     child: Stack(
       fit: StackFit.expand,

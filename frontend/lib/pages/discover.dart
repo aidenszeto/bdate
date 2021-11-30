@@ -87,10 +87,21 @@ class _discoverPageState extends State<discoverPage> {
     }
   }
 
+  _putLike() async {
+    print(widget.curUser.id + " " + user!.id);
+    var updated = await PutLike.putLike(widget.curUser, user!);
+    widget.curUser = await GetUser.getUser(widget.curUser.id);
+  }
+
+  _putDisLike() async {
+    print(widget.curUser.id + " " + user!.id);
+    var updated = await PutDisLike.putDisLike(widget.curUser, user!);
+    widget.curUser = await GetUser.getUser(widget.curUser.id);
+  }
+
   Future<VoidCallback> handleLike() async {
+    _putLike();
     if(index <= n-1) {
-      // post like
-      print(widget.curUser.id);
       var newuser = await GetUser.getUser(listuser[index].id);
       setState(() {
         user = newuser;
@@ -105,9 +116,8 @@ class _discoverPageState extends State<discoverPage> {
   }
 
   Future<VoidCallback> handleDisLike() async {
+    _putDisLike();
     if(index <= n-1) {
-      // post dislike
-      
       var newuser = await GetUser.getUser(listuser[index].id);
       setState(() {
         user = newuser;
