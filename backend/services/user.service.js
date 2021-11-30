@@ -80,6 +80,23 @@ const addUser = async (req, res) => {
     });
 };
 
+const updateUser = async (req, res) => {
+  const { _id } = req.params
+  const update = req.body
+
+  User.findOneAndUpdate(
+    { _id },
+    update,
+    { new: true }
+  )
+    .then((user) => {
+      res.send(user)
+    })
+    .catch((err) => {
+      res.send(400, "Couldn't update user")
+    })
+}
+
 const verifyUser = async (req, res) => {
   User.findOneAndUpdate(
     { email: req.params.email },
@@ -233,6 +250,7 @@ module.exports = {
   addUser,
   getUser,
   loginUser,
+  updateUser,
   filterUsers,
   verifyUser,
   updateLikedBy,
