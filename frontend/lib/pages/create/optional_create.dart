@@ -48,21 +48,37 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-        child: Container(
-            color: Colors.white,
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _buildInputForm(context),
-                    errorText ? _errorText() : Container(),
-                    _buildSignIn(context),
-                  ],
-                ),
-              ),
-            )));
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: BackButton(
+          color: AppColors.primaryElement,
+        ),
+        title: Text(
+          "Optional",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: AppColors.primaryText,
+            fontFamily: "Montserrat",
+            fontWeight: FontWeight.w500,
+            fontSize: f(30),
+            height: 1,
+          ),
+        ),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _buildInputForm(context),
+              _buildSignIn(context),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildInputForm(context) {
@@ -73,20 +89,6 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
       margin: EdgeInsets.only(top: h(50)),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 100.0),
-            child: Text(
-              "Optional",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.primaryText,
-                fontFamily: "Montserrat",
-                fontWeight: FontWeight.w500,
-                fontSize: f(30),
-                height: 1,
-              ),
-            ),
-          ),
           Container(
             child: optionalFields(optional_controllers),
           ),
