@@ -192,7 +192,9 @@ const loginUser = async (req, res) => {
       if (!user) {
         res.send(400, "Invalid login credentials");
       }
-      res.send(user);
+      else {
+        res.send(user);
+      }
     })
     .catch((err) => {
       res.send(500, "Error with request");
