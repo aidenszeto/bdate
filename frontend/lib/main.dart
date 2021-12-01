@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'route.dart';
 import 'pages/welcome.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
