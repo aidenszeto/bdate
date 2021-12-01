@@ -37,7 +37,7 @@ const addUser = async (req, res) => {
 
   const verificationNumber = Math.floor(100000 + Math.random() * 900000);
   const photoToAdd = photo.length === 0 ? null : photo;
-  const user = new User({
+  let data = {
     firstName,
     lastName,
     email,
@@ -57,8 +57,12 @@ const addUser = async (req, res) => {
     dislikedby,
     matches,
     verificationNumber,
-    photo: photoToAdd,
-  });
+  };
+  if (photoToAdd) {
+    data.photo = photoToAdd;
+  }
+
+  const user = new User(data);
 
   //@ucla.edu or @g.ucla.edu
   if (!email.endsWith("ucla.edu")) {
@@ -191,8 +195,7 @@ const loginUser = async (req, res) => {
     .then((user) => {
       if (!user) {
         res.status(400).send("Invalid login credentials");
-      }
-      else {
+      } else {
         res.send(user);
       }
     })
