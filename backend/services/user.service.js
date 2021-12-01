@@ -37,6 +37,7 @@ const addUser = async (req, res) => {
     likedby,
     dislikedby,
     matches,
+    photo,
   } = req.body;
 
   //const existingUser = User.find({ email })
@@ -53,7 +54,7 @@ const addUser = async (req, res) => {
   //   }
   // })
   const verificationNumber = Math.floor(100000 + Math.random() * 900000);
-
+  const photoToAdd = photo.length === 0 ? null : photo;
   const user = new User({
     firstName,
     lastName,
@@ -74,6 +75,7 @@ const addUser = async (req, res) => {
     dislikedby,
     matches,
     verificationNumber,
+    photoToAdd,
   });
 
   //@ucla.edu or @g.ucla.edu
