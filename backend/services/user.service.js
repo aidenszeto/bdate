@@ -227,12 +227,12 @@ const filterUsers = async (req, res) => {
         ) {
           let newUser = true;
           for (let i = 0; i < currUser.likedBy.length; i++) {
-            if (user._id == currUser.likedBy[i]) {
+            if (String(user._id) == String(currUser.likedBy[i])) {
               newUser = false;
             }
           }
           for (let i = 0; i < currUser.dislikedBy.length; i++) {
-            if (user._id == currUser.dislikedBy[i]) {
+            if (String(user._id) == String(currUser.dislikedBy[i])) {
               newUser = false;
             }
           }
