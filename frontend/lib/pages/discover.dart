@@ -162,7 +162,7 @@ class _discoverPageState extends State<discoverPage> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: CheckboxListTile(
-                          value: filter.drink,
+                          value: filter.smoke,
                           title: Text("Smoking", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),),
                           secondary:  const Icon(Icons.smoke_free,),
                           onChanged: (value){
@@ -179,7 +179,7 @@ class _discoverPageState extends State<discoverPage> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: CheckboxListTile(
-                          value: filter.smoke,
+                          value: filter.drink,
                           title: Text("Drinking", style: TextStyle(fontSize: f(16), fontWeight: FontWeight.w400, color: AppColors.primaryText),), 
                           secondary:  const Icon(Icons.local_drink),
                           onChanged: (value){
