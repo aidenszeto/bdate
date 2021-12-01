@@ -1,8 +1,18 @@
 # bdate
+## Contributor
+
+Aiden Szeto aidenszeto@ucla.edu
+
+Darren Wu dwu2@ucla.edu
+
+Mehul Jain mehuljain02@ucla.edu
+
+Chang Xu changx28@ucla.edu
+
+Saim Ahmad sahmad23@ucla.edu
 
 ## Frontend 
 
-### Command Line Approach
 
 For this project, we use flutter as the frontend. To install flutter on your device (preferably macOS, since we used iOS for testing/implementation, which is only available on macOS), please follow the detailed tutorial posted [here](https://docs.flutter.dev/get-started/install/macos).
 

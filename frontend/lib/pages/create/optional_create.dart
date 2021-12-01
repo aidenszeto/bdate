@@ -11,9 +11,6 @@ import 'package:bdate/common/entity/user.dart';
 
 import 'dart:io';
 
-final TextEditingController _instagram = TextEditingController();
-final TextEditingController _snapchat = TextEditingController();
-
 class CreateOptionalPage extends StatefulWidget {
   CreateOptionalPage({Key? key, @required required this.newUser})
       : super(key: key);
@@ -41,9 +38,10 @@ class CreateOptionalPage extends StatefulWidget {
 }
 
 class CreateOptionalPageState extends State<CreateOptionalPage> {
+  final TextEditingController _instagram = TextEditingController();
+  final TextEditingController _snapchat = TextEditingController();
+  final TextEditingController _imageURL = TextEditingController();
   bool specifyImage = false;
-  File _image = File("");
-  final ImagePicker _picker = ImagePicker();
   List<TextEditingController> optional_controllers = [];
 
   @override
@@ -72,37 +70,47 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
       margin: EdgeInsets.only(top: h(50)),
       child: Column(
         children: [
-          Text(
-            "Optional",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.primaryText,
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w500,
-              fontSize: f(30),
-              height: 1,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 100.0),
+            child: Text(
+              "Optional",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryText,
+                fontFamily: "Montserrat",
+                fontWeight: FontWeight.w500,
+                fontSize: f(30),
+                height: 1,
+              ),
             ),
           ),
           Container(
             child: optionalFields(optional_controllers),
           ),
           Container(
-            padding: EdgeInsets.only(top: 40),
-            child: Center(
-              child: Text("Profile Picture",
-                  style:
-                      TextStyle(color: AppColors.primaryText, fontSize: f(24))),
-            ),
-          ),
-          Container(
+            height: h(60),
+            margin: EdgeInsets.only(top: h(15)),
             decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(350))),
-            height: h(300),
-            width: w(400),
-            child: specifyImage == false ? _choosePicture() : _displayPicture(),
+              color: AppColors.secondaryElement,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: TextFormField(
+              controller: _imageURL,
+              keyboardType: TextInputType.name,
+              decoration: InputDecoration(
+                hintText: "Profile Picture URL",
+                contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 9),
+                border: InputBorder.none,
+              ),
+              style: TextStyle(
+                color: AppColors.primaryText,
+                fontFamily: "Avenir",
+                fontWeight: FontWeight.w500,
+                fontSize: f(18),
+              ),
+              maxLines: 1,
+              autocorrect: false,
+            ),
           ),
           Container(
             width: w(303),
@@ -111,6 +119,7 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
               onPressed: () async {
                 widget.newUser.instagram = _instagram.text;
                 widget.newUser.snapchat = _snapchat.text;
+                widget.newUser.photo = _imageURL.text;
                 var res = await PostUser.createAccount(widget.newUser);
                 if (res != null) {
                   User curUser = res;
@@ -159,46 +168,5 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
             style: TextStyle(color: AppColors.primaryText, fontSize: f(18)),
           ),
         ));
-  }
-
-  _imgFromGallery(ImagePicker _picker) async {
-    XFile? fileName = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = File(fileName!.path);
-      specifyImage = true;
-    });
-  }
-
-  Widget _choosePicture() {
-    return Container(
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(300))),
-        height: h(300),
-        width: w(400),
-        child: TextButton(
-          onPressed: () => {
-            _imgFromGallery(_picker),
-          },
-          child: Text("Choose photo",
-              style: TextStyle(
-                fontSize: 14,
-              )),
-        ));
-  }
-
-  Widget _displayPicture() {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(image: FileImage(_image), fit: BoxFit.fill),
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(300))),
-      height: h(300),
-      width: w(400),
-    );
   }
 }

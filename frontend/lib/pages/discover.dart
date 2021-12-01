@@ -85,7 +85,7 @@ class _discoverPageState extends State<discoverPage> {
       }
     }
     else {
-      AlertDialog alert = const AlertDialog(content: Text("No user can be found with your current options.\nTry switching options"),);
+      AlertDialog alert = const AlertDialog(content: Text("No (new) user can be found with your current options.\nTry switching options"),);
       showDialog(context: context, builder: (BuildContext context) {return alert;});
     }
   }
@@ -118,6 +118,8 @@ class _discoverPageState extends State<discoverPage> {
     else {
       AlertDialog alert = const AlertDialog(content: Text("You reached the end of the world"),);
       showDialog(context: context, builder: (BuildContext context) {return alert;});
+      index = 0;
+      _loadFilter().whenComplete((){setState(() {});});
     }
     return () => setState(() {});
   }
@@ -134,6 +136,7 @@ class _discoverPageState extends State<discoverPage> {
     else {
       AlertDialog alert = const AlertDialog(content: Text("You reached the end of the world"),);
       showDialog(context: context, builder: (BuildContext context) {return alert;});
+      _loadFilter().whenComplete((){setState(() {});});
     }
     return () => setState(() {});
   }

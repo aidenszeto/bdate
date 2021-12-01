@@ -10,8 +10,6 @@ import 'package:bdate/common/entity/user.dart';
 
 import 'dart:io';
 
-final TextEditingController _code = TextEditingController();
-
 class VerifyCodePage extends StatefulWidget {
   VerifyCodePage(
       {Key? key, @required required this.email, @required required this.code})
@@ -27,6 +25,7 @@ class VerifyCodePage extends StatefulWidget {
 
 class VerifyCodePageState extends State<VerifyCodePage> {
   bool isValid = true;
+  final TextEditingController _code = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
