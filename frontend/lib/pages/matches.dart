@@ -41,6 +41,7 @@ class matchesPage extends StatefulWidget {
     matches: [],
     v: 0,
     verified: false,
+    verificationNumber: -1,
   );
   @override
   _matchesPageState createState() => _matchesPageState();
@@ -148,46 +149,3 @@ Widget _title() {
             color: Colors.black,
           )));
 }
-
-/*Widget _buildButtons(context, User usr) {
-  return Container(
-      margin: EdgeInsets.all(h(48)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => discoverPage(
-                              curUser: usr,
-                            )));
-              },
-              child: Text(
-                'Discover',
-                style: TextStyle(
-                    color: Colors.white,
-                    backgroundColor: Colors.blue,
-                    fontSize: f(18)),
-              )),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => profilePage(
-                              curUser: usr,
-                            )));
-              },
-              child: Text(
-                'Profile',
-                style: TextStyle(
-                    color: Colors.white,
-                    backgroundColor: Colors.blue,
-                    fontSize: f(18)),
-              ))
-        ],
-      ));
-}
-*/

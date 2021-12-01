@@ -33,6 +33,7 @@ class profilePage extends StatefulWidget {
     matches: [],
     v: 0,
     verified: false,
+    verificationNumber: -1,
   );
 
   @override
@@ -168,6 +169,7 @@ class _profilePageState extends State<profilePage> {
               ),
             ),
           ),
+          TextButton(child: Icon(Icons.logout, color:Colors.amber), onPressed: () {Navigator.pushNamed(context, "/welcome");},),
           Form(
               key: formGlobalKey,
               child: Column(children: [

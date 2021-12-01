@@ -35,6 +35,7 @@ class User {
     required this.matches,
     required this.v,
     required this.verified,
+    required this.verificationNumber
   });
 
   String id;
@@ -59,6 +60,7 @@ class User {
   List<String> matches;
   int v;
   bool verified;
+  int verificationNumber;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],
@@ -78,6 +80,7 @@ class User {
         photo: json["photo"],
         instagram: json["instagram"],
         snapchat: json["snapchat"],
+        verificationNumber: json["verificationNumber"],
         likedBy: List<String>.from(json["likedBy"].map((x) => x)),
         dislikedBy: List<dynamic>.from(json["dislikedBy"].map((x) => x)),
         matches: List<String>.from(json["matches"].map((x) => x)),

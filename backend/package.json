@@ -6,12 +6,17 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "form-data": "^4.0.0",
     "mongoose": "^6.0.12",
-    "nodemailer": "^6.7.1"
+    "nodemailer": "^6.7.1",
+    "request": "^2.88.2",
+    "smms-cli": "^0.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.14"

@@ -21,14 +21,10 @@ class WelcomePage extends StatelessWidget {
             child: Column(
           children: <Widget>[
             buildHeadTitle(),
-            // _buildHeadDetail(),
-            // _buildFeatureItem("feature1", "Keep tract of every big and new events going on in the crypto space", 86),
-            // _buildFeatureItem("feature2", "Share thoughts in the community and get rewards", 40),
-            // _buildFeatureItem("feature3", "Customized sources all for your, make reading news an enjoyment ", 40),
-            // Spacer(),
             _buildStartButton(context),
           ],
-        )),
+        )
+      ),
       ),
     );
   }
