@@ -37,6 +37,7 @@ const addUser = async (req, res) => {
 
   const verificationNumber = Math.floor(100000 + Math.random() * 900000);
   const photoToAdd = photo.length === 0 ? null : photo;
+  console.log(photoToAdd);
   const user = new User({
     firstName,
     lastName,
@@ -57,7 +58,7 @@ const addUser = async (req, res) => {
     dislikedby,
     matches,
     verificationNumber,
-    photoToAdd,
+    photo: photoToAdd,
   });
 
   //@ucla.edu or @g.ucla.edu
@@ -210,7 +211,7 @@ const filterUsers = async (req, res) => {
 
   filtered = [];
 
-  const currUser = await User.findById(userId)
+  const currUser = await User.findById(userId);
 
   User.find()
     .then((users) => {
@@ -220,19 +221,19 @@ const filterUsers = async (req, res) => {
           (year.length === 0 || year.includes(user.year)) &&
           (location.length === 0 || location.includes(user.location)) &&
           drink == user.drink &&
-          smoke == user.smoke && 
-          user.verified && 
+          smoke == user.smoke &&
+          user.verified &&
           String(user._id) !== String(userId)
         ) {
-          let newUser = true
+          let newUser = true;
           for (let i = 0; i < currUser.likedBy.length; i++) {
             if (user._id == currUser.likedBy[i]) {
-              newUser = false
+              newUser = false;
             }
           }
           for (let i = 0; i < currUser.dislikedBy.length; i++) {
             if (user._id == currUser.dislikedBy[i]) {
-              newUser = false
+              newUser = false;
             }
           }
           if (newUser) {
