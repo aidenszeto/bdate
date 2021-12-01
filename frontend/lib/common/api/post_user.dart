@@ -20,7 +20,6 @@ class PostUser {
       if (status >= 200 && status < 300) {
         return User.fromJson(response.data);
       } else {
-        print(status);
         return null;
       }
     } catch (e) {
