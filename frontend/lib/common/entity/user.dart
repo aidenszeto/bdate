@@ -7,6 +7,8 @@ String userToJson(CreateUser data) => json.encode(data.toJson());
 
 String loginToJson(LoginUser data) => json.encode(data.toJson());
 
+String verifyToJson(VerifyUser data) => json.encode(data.toJson());
+
 String updateToJson(UpdateUser data) => json.encode(data.toJson());
 
 class User {
@@ -166,6 +168,21 @@ class LoginUser {
   Map<String, dynamic> toJson() => {
         "email": email,
         "password": password,
+      };
+}
+
+class VerifyUser {
+  VerifyUser({
+    required this.email,
+    required this.verificationNumber,
+  });
+
+  String email;
+  int verificationNumber;
+
+  Map<String, dynamic> toJson() => {
+        "email": email,
+        "verificationNumber": verificationNumber,
       };
 }
 
