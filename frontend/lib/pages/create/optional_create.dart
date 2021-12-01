@@ -46,34 +46,14 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-        child: Container(
-            color: Colors.white,
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _buildInputForm(context),
-                    _buildSignIn(context),
-                  ],
-                ),
-              ),
-            )));
-  }
-
-  Widget _buildInputForm(context) {
-    optional_controllers = [_instagram, _snapchat];
-
-    return Container(
-      width: w(303),
-      margin: EdgeInsets.only(top: h(50)),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 100.0),
-            child: Text(
-              "Optional",
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: BackButton(color: AppColors.primaryElement,),
+          title: 
+            Text(
+              "Optional", 
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.primaryText,
@@ -84,6 +64,28 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
               ),
             ),
           ),
+        body: Center(
+          child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _buildInputForm(context),
+                        _buildSignIn(context),
+                      ],
+                    ),
+                  ),
+        ),
+              );
+  }
+
+  Widget _buildInputForm(context) {
+    optional_controllers = [_instagram, _snapchat];
+
+    return Container(
+      width: w(303),
+      margin: EdgeInsets.only(top: h(50)),
+      child: Column(
+        children: [
           Container(
             child: optionalFields(optional_controllers),
           ),
