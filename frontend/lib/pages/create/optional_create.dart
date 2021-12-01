@@ -43,7 +43,6 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
   final TextEditingController _imageURL = TextEditingController();
   bool specifyImage = false;
   bool errorText = false;
-  bool isPosted = false;
   List<TextEditingController> optional_controllers = [];
 
   @override
@@ -73,6 +72,7 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _buildInputForm(context),
+              errorText ? _errorText() : Container(),
               _buildSignIn(context),
             ],
           ),
@@ -136,10 +136,7 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
                               email: res.email,
                             )),
                   );
-                  setState(() {
-                    isPosted = true;
-                  });
-                } else if (isPosted == false) {
+                } else {
                   setState(() {
                     errorText = true;
                   });
