@@ -204,10 +204,13 @@ const filterUsers = async (req, res) => {
     year, // array
     location, // array,
     drink, // bool
-    smoke, // bool
+    smoke, // bool,
+    userId, // string
   } = req.body;
 
   filtered = [];
+
+  const currUser = await User.findById(userId)
 
   User.find()
     .then((users) => {
@@ -217,9 +220,22 @@ const filterUsers = async (req, res) => {
           (year.length === 0 || year.includes(user.year)) &&
           (location.length === 0 || location.includes(user.location)) &&
           drink == user.drink &&
-          smoke == user.smoke
+          smoke == user.smoke && user.verified
         ) {
-          filtered.push(user);
+          let newUser = true
+          for (let i = 0; i < currUser.likedBy.length; i++) {
+            if (user._id == currUser.likedBy[i]) {
+              newUser = false
+            }
+          }
+          for (let i = 0; i < currUser.dislikedBy.length; i++) {
+            if (user._id == currUser.dislikedBy[i]) {
+              newUser = false
+            }
+          }
+          if (newUser) {
+            filtered.push(user);
+          }
           return true;
         }
       });
