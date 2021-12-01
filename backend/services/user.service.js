@@ -211,8 +211,6 @@ const filterUsers = async (req, res) => {
 
   filtered = [];
 
-  const currUser = await User.findById(userId);
-
   User.find()
     .then((users) => {
       users.filter((user) => {
@@ -226,13 +224,13 @@ const filterUsers = async (req, res) => {
           String(user._id) !== String(userId)
         ) {
           let newUser = true;
-          for (let i = 0; i < currUser.likedBy.length; i++) {
-            if (String(user._id) == String(currUser.likedBy[i])) {
+          for (let i = 0; i < user.likedBy.length; i++) {
+            if (String(user.likedBy[i]) == String(userId)) {
               newUser = false;
             }
           }
-          for (let i = 0; i < currUser.dislikedBy.length; i++) {
-            if (String(user._id) == String(currUser.dislikedBy[i])) {
+          for (let i = 0; i < user.dislikedBy.length; i++) {
+            if (String(user.dislikedBy[i]) == String(userId)) {
               newUser = false;
             }
           }
