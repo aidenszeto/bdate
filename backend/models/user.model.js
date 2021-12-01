@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { PreferencesSchema } = require("./preferences.model");
 const Schema = mongoose.Schema;
 
 const { String, Array, Boolean, Number } = Schema.Types;
@@ -14,7 +13,6 @@ const { String, Array, Boolean, Number } = Schema.Types;
         snap - optional,
         dob
         attributes (separate object)
-        Preferences (separate object)
         likedBy 
         dislikedBy 
         matches
