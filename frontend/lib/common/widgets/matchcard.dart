@@ -29,7 +29,8 @@ Widget matchcard(User? user) {
               Container(
                 child: Row(
                   children: [
-                    Text(
+                    Flexible(
+                        child: Text(
                       "${user?.firstName ?? "Joe"} ${user?.lastName ?? "Bruin"}",
                       style: TextStyle(
                           color: AppColors.primaryElementText,
@@ -41,7 +42,7 @@ Widget matchcard(User? user) {
                                 color: Colors.grey,
                                 blurRadius: 1)
                           ]),
-                    ),
+                    )),
                     user?.verified ?? true
                         ? Icon(
                             Icons.check,

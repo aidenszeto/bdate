@@ -1,14 +1,7 @@
 import 'package:bdate/common/entity/user.dart';
-import 'package:bdate/pages/discover.dart';
-import 'package:bdate/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:bdate/common/api/api.dart';
-import 'package:bdate/common/values/values.dart';
-import 'package:bdate/pages/app.dart';
-import 'dart:convert';
-
 import 'package:bdate/common/widgets/matchcard.dart';
-import 'package:bdate/common/utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class matchesPage extends StatefulWidget {
@@ -68,38 +61,6 @@ class _matchesPageState extends State<matchesPage> {
       var response = await GetUser.getUser(i);
       new_list.add(response);
     }
-    //var response = await GetUser.getUser('619ae978dd241249abd866fc');
-    //new_list.add(response);
-    //new_list.add(response);
-    //print(response.firstName);
-    //print(new_list[0].firstName);
-
-    /*var jsonUsr = jsonEncode((response));
-
-    var usr = await GetUser.getUser('619ae978dd241249abd866fc');
-    List matchesArray = [];
-    var matchesIdArray = response.matches;
-
-    for (int i = 0; i < matchesIdArray.length; i++) {
-      print(matchesIdArray[i]);
-      var getMatch = await GetUser.getUser(matchesIdArray[i]);
-      var person = match(getMatch.firstName, getMatch.lastName, getMatch.email,
-          getMatch.instagram, getMatch.snapchat);
-      matchesArray.add(person);
-    }
-    for (int j = 0; j < matchesArray.length; j++) {
-      matchesArray[j].displayData();
-    }
-    /*for (int i = 0; i < matchesArray.length; i++) {
-      print(matchesIdArray[i]);
-      var response = await GetUser.getUser(matchesIdArray[i]);
-      print(response.firstName);
-      var person = match(response.firstName, response.lastName, response.email,
-          response.instagram, response.snapchat);
-
-      matchesArray.add(person);*/
-    }*/
-    //print(matchesArray);
   }
 
   @override
