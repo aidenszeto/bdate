@@ -46,7 +46,7 @@ const addUser = async (req, res) => {
   //     return;
   //   }
   // })
-
+  const verificationNumber = Math.floor(100000 + Math.random() * 900000);
   const user = new User({
     firstName,
     lastName,
@@ -66,15 +66,19 @@ const addUser = async (req, res) => {
     likedby,
     dislikedby,
     matches,
+    verificationNumber,
   });
 
   //@ucla.edu or @g.ucla.edu
   if (!email.endsWith("ucla.edu")) {
-    res.send(400, "Users must use their UCLA school email when registering their accounts");
+    res.send(
+      400,
+      "Users must use their UCLA school email when registering their accounts"
+    );
     return;
   }
 
-  await sendVerificationEmail(email);
+  await sendVerificationEmail(email, verificationNumber);
 
   user
     .save()
@@ -82,36 +86,42 @@ const addUser = async (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      res.status(400).send("Couldn't sign up user")
+      res.status(400).send("Couldn't sign up user");
     });
 };
 
 const updateUser = async (req, res) => {
-  const { _id } = req.params
-  const update = req.body
+  const { _id } = req.params;
+  const update = req.body;
 
-  User.findOneAndUpdate(
-    { _id },
-    update,
-    { new: true }
-  )
+  User.findOneAndUpdate({ _id }, update, { new: true })
     .then((user) => {
-      res.send(user)
+      res.send(user);
     })
     .catch((err) => {
-      res.send(400, "Couldn't update user")
-    })
-}
+      res.send(400, "Couldn't update user");
+    });
+};
 
 const verifyUser = async (req, res) => {
+  const { email, verificationNumber } = req.body;
+
   User.findOneAndUpdate(
-    { email: req.params.email },
+    {
+      email,
+      verificationNumber,
+    },
     { $set: { verified: true } }
   )
     .then((status) => {
-      res.send(status);
+      if (!status) {
+        res.status(400).send("Incorrect verification code");
+      } else {
+        res.send(status);
+      }
     })
     .catch((err) => {
+      console.log("failed to update");
       res.send(err);
     });
 };
@@ -189,7 +199,7 @@ const loginUser = async (req, res) => {
   })
     .then((user) => {
       if (!user) {
-        res.send(400, "Invalid login credentials")
+        res.send(400, "Invalid login credentials");
       }
       res.send(user);
     })
@@ -230,7 +240,7 @@ const filterUsers = async (req, res) => {
     });
 };
 
-const sendVerificationEmail = async (email) => {
+const sendVerificationEmail = async (email, verificationNumber) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -239,15 +249,12 @@ const sendVerificationEmail = async (email) => {
     },
   });
 
-  let verificationUrl = `http://localhost:8080/user/verify/${email}`;
-  email = "zasaimster@gmail.com";
-
   let info = await transporter.sendMail({
     from: '"BDate verification" <verify@bdate.com>', // sender address
     to: `${email}`, // list of receivers
     subject: "Verify your Bdate Account!", // Subject line
-    text: "Click on the link below to verify your email!",
-    html: `<a href='${verificationUrl}'>Verify!</a>`,
+    text: "Enter the following code in the Bdate App",
+    html: `<p> Your verification code is ${verificationNumber}</p>`,
   });
 };
 
