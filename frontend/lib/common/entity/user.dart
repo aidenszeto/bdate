@@ -7,34 +7,35 @@ String userToJson(CreateUser data) => json.encode(data.toJson());
 
 String loginToJson(LoginUser data) => json.encode(data.toJson());
 
+String verifyToJson(VerifyUser data) => json.encode(data.toJson());
+
 String updateToJson(UpdateUser data) => json.encode(data.toJson());
 
 class User {
-  User({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.password,
-    required this.age,
-    required this.gender,
-    required this.ethnicity,
-    required this.height,
-    required this.year,
-    required this.location,
-    required this.major,
-    required this.smoke,
-    required this.drink,
-    required this.photo,
-    required this.instagram,
-    required this.snapchat,
-    required this.likedBy,
-    required this.dislikedBy,
-    required this.matches,
-    required this.v,
-    required this.verified,
-    required this.verificationNumber
-  });
+  User(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.password,
+      required this.age,
+      required this.gender,
+      required this.ethnicity,
+      required this.height,
+      required this.year,
+      required this.location,
+      required this.major,
+      required this.smoke,
+      required this.drink,
+      required this.photo,
+      required this.instagram,
+      required this.snapchat,
+      required this.likedBy,
+      required this.dislikedBy,
+      required this.matches,
+      required this.v,
+      required this.verified,
+      required this.verificationNumber});
 
   String id;
   String firstName;
@@ -116,6 +117,7 @@ class CreateUser {
     required this.year,
     required this.location,
     required this.major,
+    required this.photo,
     required this.smoke,
     required this.drink,
     this.instagram,
@@ -133,6 +135,7 @@ class CreateUser {
   String year;
   String location;
   String major;
+  String photo;
   bool smoke;
   bool drink;
   String? instagram;
@@ -150,6 +153,7 @@ class CreateUser {
         "year": year,
         "location": location,
         "major": major,
+        "photo": photo,
         "smoke": smoke,
         "drink": drink,
         "instagram": instagram,
@@ -169,6 +173,21 @@ class LoginUser {
   Map<String, dynamic> toJson() => {
         "email": email,
         "password": password,
+      };
+}
+
+class VerifyUser {
+  VerifyUser({
+    required this.email,
+    required this.verificationNumber,
+  });
+
+  String email;
+  int verificationNumber;
+
+  Map<String, dynamic> toJson() => {
+        "email": email,
+        "verificationNumber": verificationNumber,
       };
 }
 

@@ -4,7 +4,6 @@ import 'package:bdate/common/values/values.dart';
 import 'package:bdate/common/widgets/widgets.dart';
 import 'package:bdate/common/entity/user.dart';
 import 'package:bdate/common/api/update_user.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'dart:io';
 
@@ -45,11 +44,6 @@ class _profilePageState extends State<profilePage> {
   List<TextEditingController> optional_controllers = [];
   bool _doesDrink = false;
   bool _doesSmoke = false;
-  bool _specifyImage = false;
-  File _chosenImage = File('');
-  final NetworkImage _defaultImage = const NetworkImage(
-      "https://180dc.org/wp-content/uploads/2018/05/empty.png");
-  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -142,32 +136,14 @@ class _profilePageState extends State<profilePage> {
         children: [
           Container(
             decoration: BoxDecoration(
-                image: _specifyImage == false
-                    ? DecorationImage(image: _defaultImage, fit: BoxFit.fill)
-                    : DecorationImage(
-                        image: FileImage(_chosenImage), fit: BoxFit.fill),
+                image: DecorationImage(
+                        image: NetworkImage(widget.curUser.photo), fit: BoxFit.fill),
                 border: Border.all(
                   color: Colors.grey,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(300))),
             height: h(300),
             width: w(400),
-          ),
-          TextButton(
-            onPressed: () {
-              _imgFromGallery(_picker);
-            },
-            child: Text(
-              "Change Profile Picture",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.primaryText,
-                fontFamily: "Montserrat",
-                fontWeight: FontWeight.w600,
-                fontSize: f(20),
-                height: 1,
-              ),
-            ),
           ),
           TextButton(child: Icon(Icons.logout, color:Colors.amber), onPressed: () {Navigator.pushNamed(context, "/welcome");},),
           Form(
@@ -288,14 +264,6 @@ class _profilePageState extends State<profilePage> {
     );
   }
 
-  _imgFromGallery(ImagePicker _picker) async {
-    XFile? fileName = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _specifyImage = true;
-      _chosenImage =
-          File(fileName!.path); // this is absolute path on user's simulator
-    });
-  }
 }
 
 Widget _buildPopupDialog(BuildContext context, bool isSuccess) {
@@ -305,15 +273,6 @@ Widget _buildPopupDialog(BuildContext context, bool isSuccess) {
       isSuccess ? 'Profile Saved' : 'Profile Not Saved',
       style: TextStyle(fontSize: 25),
     )),
-    /*
-    content: new Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text("Hello"),
-      ],
-    ),
-    */
     actions: <Widget>[
       TextButton(
         onPressed: () {

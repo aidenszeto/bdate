@@ -4,6 +4,7 @@ import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/values/values.dart';
 import 'package:bdate/common/widgets/widgets.dart';
 import 'package:bdate/pages/app.dart';
+import 'package:bdate/pages/create/verify_code.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bdate/common/api/post_user.dart';
 import 'package:bdate/common/entity/user.dart';
@@ -28,6 +29,7 @@ class CreateOptionalPage extends StatefulWidget {
     year: "",
     location: "",
     major: "",
+    photo: "",
     smoke: false,
     drink: false,
   );
@@ -111,15 +113,15 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
                 widget.newUser.snapchat = _snapchat.text;
                 var res = await PostUser.createAccount(widget.newUser);
                 if (res != null) {
-                  // TODO::backend needs to send 400 if can't create account
                   User curUser = res;
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AppPage(
-                          curUser: curUser,
-                        ),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VerifyCodePage(
+                              code: res.verificationNumber,
+                              email: res.email,
+                            )),
+                  );
                 } else {}
               },
               style: ButtonStyle(

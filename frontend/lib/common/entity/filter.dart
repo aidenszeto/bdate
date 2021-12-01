@@ -12,6 +12,7 @@ class Filter {
         required this.location,
         required this.drink,
         required this.smoke,
+        required this.userId,
     });
 
     List<dynamic> whoToDate;
@@ -19,6 +20,7 @@ class Filter {
     List<dynamic> location;
     bool? drink;
     bool? smoke;
+    String userId;
 
     factory Filter.fromJson(Map<String, dynamic> json) => Filter(
         whoToDate: List<dynamic>.from(json["whoToDate"].map((x) => x)),
@@ -26,6 +28,7 @@ class Filter {
         location: List<dynamic>.from(json["location"].map((x) => x)),
         drink: json["drink"],
         smoke: json["smoke"],
+        userId: json["userId"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -34,5 +37,6 @@ class Filter {
         "location": List<dynamic>.from(location.map((x) => x)),
         "drink": drink,
         "smoke": smoke,
+        "userId": userId,
     };
 }

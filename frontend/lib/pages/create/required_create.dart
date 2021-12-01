@@ -94,6 +94,7 @@ class CreatePageState extends State<CreatePage> {
                     year: _year.text,
                     location: _location.text,
                     major: _major.text,
+                    photo: "",
                     smoke: _doesSmoke.value,
                     drink: _doesDrink.value,
                   );
