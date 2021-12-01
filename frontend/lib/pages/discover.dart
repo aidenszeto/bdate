@@ -88,15 +88,19 @@ class _discoverPageState extends State<discoverPage> {
   }
 
   _putLike() async {
-    print(widget.curUser.id + " " + user!.id);
-    var updated = await PutLike.putLike(widget.curUser, user!);
-    widget.curUser = await GetUser.getUser(widget.curUser.id);
+    if(user != null) {
+      print(widget.curUser.id + " " + user!.id);
+      var updated = await PutLike.putLike(widget.curUser, user!);
+      widget.curUser = await GetUser.getUser(widget.curUser.id);
+    }
   }
 
   _putDisLike() async {
-    print(widget.curUser.id + " " + user!.id);
-    var updated = await PutDisLike.putDisLike(widget.curUser, user!);
-    widget.curUser = await GetUser.getUser(widget.curUser.id);
+    if(user != null) {
+      print(widget.curUser.id + " " + user!.id);
+      var updated = await PutDisLike.putDisLike(widget.curUser, user!);
+      widget.curUser = await GetUser.getUser(widget.curUser.id);
+    }
   }
 
   Future<VoidCallback> handleLike() async {
@@ -160,7 +164,7 @@ class _discoverPageState extends State<discoverPage> {
                           secondary:  const Icon(Icons.smoke_free,),
                           onChanged: (value){
                             setState(() {
-                              filter.drink=value;
+                              filter.smoke=value;
                             });
                           },
                         ),
@@ -177,7 +181,7 @@ class _discoverPageState extends State<discoverPage> {
                           secondary:  const Icon(Icons.local_drink),
                           onChanged: (value){
                             setState(() {
-                              filter.smoke=value;
+                              filter.drink=value;
                             });
                           },
                         ),
