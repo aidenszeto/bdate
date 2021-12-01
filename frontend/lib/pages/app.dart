@@ -124,7 +124,7 @@ class _AppPage extends State<AppPage> {
         discoverPage(
           curUser: widget.curUser,
         ),
-        matchesPage(),
+        matchesPage(curUser: widget.curUser),
         profilePage(
           curUser: widget.curUser,
         )

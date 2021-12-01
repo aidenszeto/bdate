@@ -33,10 +33,19 @@ const addUser = async (req, res) => {
     matches,
   } = req.body;
 
-  const existingUser = User.find({ email })
-  if (existingUser) {
-    res.send(400, "Email already registered")
-  }
+  //const existingUser = User.find({ email })
+  // console.log(existingUser)
+  // if (existingUser) {
+  //   res.send(400, "Email already registered")
+  // }
+
+  // User.countDocuments({email}, (err, count) => {
+  //   if(count > 0){
+  //     // res.send(400, "Email already registered")
+  //     res.status(400).send("Email already registered")
+  //     return;
+  //   }
+  // })
 
   const user = new User({
     firstName,
@@ -61,10 +70,8 @@ const addUser = async (req, res) => {
 
   //@ucla.edu or @g.ucla.edu
   if (!email.endsWith("ucla.edu")) {
-    res.send(400, {
-      error:
-        "Users must use their UCLA school email when registering their accounts",
-    });
+    res.send(400, "Users must use their UCLA school email when registering their accounts");
+    return;
   }
 
   await sendVerificationEmail(email);
@@ -75,8 +82,7 @@ const addUser = async (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      console.log(err);
-      res.send(400, "Couldn't sign up user");
+      res.status(400).send("Couldn't sign up user")
     });
 };
 
@@ -113,7 +119,7 @@ const verifyUser = async (req, res) => {
 const updateLikedBy = async (req, res) => {
   const { user, likedUser } = req.body;
 
-  User.findByIdAndUpdate(likedUser, { $push: { likedBy: user } })
+  User.findByIdAndUpdate(likedUser, { $addToSet: { likedBy: user } })
     .then((status) => {
       // Go through liked person's array and if they liked the current user, add each other to their "matches" array
       User.findById(user, "likedBy")
@@ -133,7 +139,7 @@ const updateLikedBy = async (req, res) => {
 
 //idk what to do within the .then and the .catch blocks here
 const addToMatchesList = async (user1, user2) => {
-  User.findByIdAndUpdate(user1, { $push: { matches: user2 } })
+  User.findByIdAndUpdate(user1, { $addToSet: { matches: user2 } })
     .then((res) => {
       //console.log(res)
     })
@@ -141,7 +147,7 @@ const addToMatchesList = async (user1, user2) => {
       //console.log(err)
     });
 
-  User.findByIdAndUpdate(user2, { $push: { matches: user1 } })
+  User.findByIdAndUpdate(user2, { $addToSet: { matches: user1 } })
     .then((res) => {
       //console.log(res)
     })
@@ -153,7 +159,7 @@ const addToMatchesList = async (user1, user2) => {
 const updateDislikedBy = async (req, res) => {
   const { user, dislikedUser } = req.body;
 
-  User.findByIdAndUpdate(dislikedUser, { $push: { dislikedBy: user } })
+  User.findByIdAndUpdate(dislikedUser, { $addToSet: { dislikedBy: user } })
     .then((status) => {
       res.send(status);
     })
