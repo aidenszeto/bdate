@@ -37,7 +37,6 @@ const addUser = async (req, res) => {
 
   const verificationNumber = Math.floor(100000 + Math.random() * 900000);
   const photoToAdd = photo.length === 0 ? null : photo;
-  console.log(photoToAdd);
   const user = new User({
     firstName,
     lastName,
@@ -63,10 +62,11 @@ const addUser = async (req, res) => {
 
   //@ucla.edu or @g.ucla.edu
   if (!email.endsWith("ucla.edu")) {
-    res.send(
-      400,
-      "Users must use their UCLA school email when registering their accounts"
-    );
+    res
+      .status(400)
+      .send(
+        "Users must use their UCLA school email when registering their accounts"
+      );
     return;
   }
 
@@ -91,7 +91,7 @@ const updateUser = async (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      res.send(400, "Couldn't update user");
+      res.status(400).send("Couldn't update user");
     });
 };
 
@@ -190,12 +190,12 @@ const loginUser = async (req, res) => {
   })
     .then((user) => {
       if (!user) {
-        res.send(400, "Invalid login credentials");
+        res.status(400).send("Invalid login credentials");
       }
       res.send(user);
     })
     .catch((err) => {
-      res.send(500, "Error with request");
+      res.status(500).send("Error with request");
     });
 };
 
