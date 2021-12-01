@@ -45,7 +45,8 @@ class _discoverPageState extends State<discoverPage> {
     year: [], 
     location: [], 
     drink: false, 
-    smoke: false
+    smoke: false,
+    userId: ""
   ); 
   User? user;
   late List<User> listuser;
@@ -58,6 +59,7 @@ class _discoverPageState extends State<discoverPage> {
 
   @override
   void initState() {
+    filter.userId = widget.curUser.id;
     _loadFilter().whenComplete((){setState(() {});});
     super.initState();
   }

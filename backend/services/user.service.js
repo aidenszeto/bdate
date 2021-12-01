@@ -35,19 +35,6 @@ const addUser = async (req, res) => {
     photo,
   } = req.body;
 
-  //const existingUser = User.find({ email })
-  // console.log(existingUser)
-  // if (existingUser) {
-  //   res.send(400, "Email already registered")
-  // }
-
-  // User.countDocuments({email}, (err, count) => {
-  //   if(count > 0){
-  //     // res.send(400, "Email already registered")
-  //     res.status(400).send("Email already registered")
-  //     return;
-  //   }
-  // })
   const verificationNumber = Math.floor(100000 + Math.random() * 900000);
   const photoToAdd = photo.length === 0 ? null : photo;
   const user = new User({
@@ -92,45 +79,6 @@ const addUser = async (req, res) => {
     .catch((err) => {
       res.status(400).send("Couldn't sign up user");
     });
-};
-
-const uploadPhoto = async (req, res) => {
-  console.log(req.body.photo);
-
-  // const {
-  //   _id
-  // } = req._id
-  // //handle image posting. Get the url and add that to the user object
-  // const config = {
-  //   method: "post",
-  //   url: "https://sm.ms/api/v2/upload",
-  //   headers: {
-  //     Authorization: process.env.IMG_KEY,
-  //     //...formData.getHeaders(),
-  //   },
-  //   data: {
-  //     smfile: req.files.smfile,
-  //   },
-  //   maxBodyLength: Infinity,
-  //   maxContentLength: Infinity,
-  // };
-  // smms
-  //   .upload(req.files.smfile.data.buffer)
-  //   .then((response) => {
-  //     console.log(response);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-  //   User.findOneAndUpdate()
-  // axios(config)
-  //   .then(function (response) {
-  //     console.log(JSON.stringify(response.data));
-  //     res.send(response.data);
-  //   })
-  //   .catch(function (err) {
-  //     res.send(err);
-  //   });
 };
 
 const updateUser = async (req, res) => {
@@ -189,7 +137,7 @@ const updateLikedBy = async (req, res) => {
     });
 };
 
-//idk what to do within the .then and the .catch blocks here
+//there isn't much to do in the .then and the .catch blocks here
 const addToMatchesList = async (user1, user2) => {
   User.findByIdAndUpdate(user1, { $addToSet: { matches: user2 } })
     .then((res) => {
@@ -256,10 +204,13 @@ const filterUsers = async (req, res) => {
     year, // array
     location, // array,
     drink, // bool
-    smoke, // bool
+    smoke, // bool,
+    userId, // string
   } = req.body;
 
   filtered = [];
+
+  const currUser = await User.findById(userId)
 
   User.find()
     .then((users) => {
@@ -269,9 +220,24 @@ const filterUsers = async (req, res) => {
           (year.length === 0 || year.includes(user.year)) &&
           (location.length === 0 || location.includes(user.location)) &&
           drink == user.drink &&
-          smoke == user.smoke
+          smoke == user.smoke && 
+          user.verified && 
+          String(user._id) !== String(userId)
         ) {
-          filtered.push(user);
+          let newUser = true
+          for (let i = 0; i < currUser.likedBy.length; i++) {
+            if (user._id == currUser.likedBy[i]) {
+              newUser = false
+            }
+          }
+          for (let i = 0; i < currUser.dislikedBy.length; i++) {
+            if (user._id == currUser.dislikedBy[i]) {
+              newUser = false
+            }
+          }
+          if (newUser) {
+            filtered.push(user);
+          }
           return true;
         }
       });
@@ -292,9 +258,9 @@ const sendVerificationEmail = async (email, verificationNumber) => {
   });
 
   let info = await transporter.sendMail({
-    from: '"BDate verification" <verify@bdate.com>', // sender address
+    from: '"Bdate verification" <verify@bdate.com>', // sender address
     to: `${email}`, // list of receivers
-    subject: "Verify your Bdate Account!", // Subject line
+    subject: "Welcome to Bdate!", // Subject line
     text: "Enter the following code in the Bdate App",
     html: `<p> Your verification code is ${verificationNumber}</p>`,
   });
@@ -310,5 +276,4 @@ module.exports = {
   verifyUser,
   updateLikedBy,
   updateDislikedBy,
-  uploadPhoto,
 };
