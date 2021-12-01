@@ -33,6 +33,7 @@ class profilePage extends StatefulWidget {
     matches: [],
     v: 0,
     verified: false,
+    verificationNumber: -1,
   );
 
   @override

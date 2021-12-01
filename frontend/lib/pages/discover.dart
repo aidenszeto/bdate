@@ -32,6 +32,7 @@ class discoverPage extends StatefulWidget {
     matches: [],
     v: 0,
     verified: false,
+    verificationNumber: -1,
   );
   @override
   _discoverPageState createState() => _discoverPageState();

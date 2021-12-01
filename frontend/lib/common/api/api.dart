@@ -6,4 +6,3 @@ export 'post_user.dart';
 export 'put_like.dart';
 export 'put_dislike.dart';
 export 'update_user.dart';
-export 'upload_image.dart';
