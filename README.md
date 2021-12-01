@@ -1,6 +1,12 @@
 # bdate
-
+## Contributor
+Aiden Szeto
 ## Frontend 
+Aiden Szeto aidenszeto@ucla.edu
+Darren Wu dwu2@ucla.edu
+Mehul Jain mehuljain02@ucla.edu
+Chang Xu changx28@ucla.edu
+Saim Ahmad sahmad23@ucla.edu
 
 ### Command Line Approach
 
