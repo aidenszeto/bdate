@@ -36,7 +36,8 @@ Once you have installed Node.js, please change directories into the `backend` fo
 
 Next, create a file named `.env` in the `backend` folder of the project repository. Inside of this file, paste
 
-```DATABASE_URI=mongodb+srv://user:password@bdate.msyzd.mongodb.net/bdate?retryWrites=true&w=majority
+```
+DATABASE_URI=mongodb+srv://user:password@bdate.msyzd.mongodb.net/bdate?retryWrites=true&w=majority
 ```
 where `user` and `password` are replaced with the username and password found in the security tab in the MongoDB project console.
 
