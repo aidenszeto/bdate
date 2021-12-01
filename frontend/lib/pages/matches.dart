@@ -124,6 +124,9 @@ List<Widget> getList(List<User> users, BuildContext b, User usr) {
   for (var i = 0; i < users.length; i++) {
     childs.add(matchcard(users[i]));
   }
+  if (childs.length == 1) {
+    childs.add(Text('You have no matches'));
+  }
   //childs.add(_buildButtons(b, usr));
   return childs;
 }

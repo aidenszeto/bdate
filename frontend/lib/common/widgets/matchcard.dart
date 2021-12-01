@@ -25,7 +25,7 @@ Widget matchcard(User? user) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: h(180)),
+              SizedBox(height: h(175)),
               Container(
                 child: Row(
                   children: [
@@ -58,7 +58,7 @@ Widget matchcard(User? user) {
               //SizedBox(height: h(83)),
               Container(
                 child: Text(
-                  "Email: ${user?.email ?? "none"}\nInstagram: @${user?.instagram ?? "@none"}\nSnapchat: ${user?.snapchat ?? "@none"},",
+                  "Email: ${user?.email ?? "none"}\nInstagram: @${user?.instagram ?? "@none"}\nSnapchat: ${user?.snapchat ?? "@none"}",
                   style: TextStyle(
                       color: AppColors.primaryElementText,
                       fontSize: f(18),
