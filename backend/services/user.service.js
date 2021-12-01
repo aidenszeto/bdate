@@ -1,5 +1,10 @@
-const User = require("../models/user.model");
 const nodemailer = require("nodemailer");
+const axios = require("axios");
+const FormData = require("form-data");
+require("dotenv").config();
+
+const User = require("../models/user.model");
+const formData = new FormData();
 
 const getAllUsers = async (req, res) => {
   User.find()
@@ -33,6 +38,8 @@ const addUser = async (req, res) => {
     matches,
   } = req.body;
 
+  console.log(req.body);
+
   //const existingUser = User.find({ email })
   // console.log(existingUser)
   // if (existingUser) {
@@ -47,6 +54,9 @@ const addUser = async (req, res) => {
   //   }
   // })
   const verificationNumber = Math.floor(100000 + Math.random() * 900000);
+
+  //handle image posting. Get the url and add that to the user object
+
   const user = new User({
     firstName,
     lastName,
@@ -121,7 +131,6 @@ const verifyUser = async (req, res) => {
       }
     })
     .catch((err) => {
-      console.log("failed to update");
       res.send(err);
     });
 };
