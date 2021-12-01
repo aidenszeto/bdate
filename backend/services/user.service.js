@@ -220,7 +220,9 @@ const filterUsers = async (req, res) => {
           (year.length === 0 || year.includes(user.year)) &&
           (location.length === 0 || location.includes(user.location)) &&
           drink == user.drink &&
-          smoke == user.smoke && user.verified
+          smoke == user.smoke && 
+          user.verified && 
+          String(user._id) !== String(userId)
         ) {
           let newUser = true
           for (let i = 0; i < currUser.likedBy.length; i++) {
