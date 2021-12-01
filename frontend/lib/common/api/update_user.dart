@@ -15,7 +15,6 @@ class ReviseUser {
     var url = "http://localhost:8080/user/update/" + id;
     Response response = await dio.put(url, data: encodeUser);
     int status = response.statusCode!;
-    print(status);
     if (status >= 200 && status < 300) {
       return User.fromJson(response.data);
     } else {

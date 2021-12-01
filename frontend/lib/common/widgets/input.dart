@@ -16,6 +16,7 @@ Widget InputTextEdit(
     required String hintText,
     bool isPassword = false,
     bool isNumber = false,
+    bool isOptional = false,
     double marginTop = 15}) {
   return Container(
     height: h(60),
@@ -33,6 +34,9 @@ Widget InputTextEdit(
         border: InputBorder.none,
       ),
       validator: (input) {
+        if (isOptional) {
+          return null;
+        }
         if (input != null) {
           if (isNumber ? isNumberValid(input) : isTextValid(input)) {
             return null;
@@ -121,11 +125,13 @@ Widget optionalFields(List<TextEditingController> controllers) {
           controller: controllers[0],
           keyboardType: TextInputType.name,
           hintText: "Instagram Account",
+          isOptional: true,
         ),
         InputTextEdit(
           controller: controllers[1],
           keyboardType: TextInputType.name,
           hintText: "Snapchat Account",
+          isOptional: true,
         ),
       ]));
 }

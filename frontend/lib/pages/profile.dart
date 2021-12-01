@@ -42,13 +42,20 @@ class profilePage extends StatefulWidget {
 class _profilePageState extends State<profilePage> {
   List<TextEditingController> required_controllers = [];
   List<TextEditingController> optional_controllers = [];
-  PrimitiveWrapper _doesDrink = PrimitiveWrapper(false);
-  PrimitiveWrapper _doesSmoke = PrimitiveWrapper(false);
+  bool _doesDrink = false;
+  bool _doesSmoke = false;
   bool _specifyImage = false;
   File _chosenImage = File('');
   final NetworkImage _defaultImage = const NetworkImage(
       "https://180dc.org/wp-content/uploads/2018/05/empty.png");
   final ImagePicker _picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    _doesDrink = widget.curUser.drink;
+    _doesSmoke = widget.curUser.smoke;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,16 +168,63 @@ class _profilePageState extends State<profilePage> {
               ),
             ),
           ),
+          TextButton(child: Icon(Icons.logout, color:Colors.amber), onPressed: () {Navigator.pushNamed(context, "/welcome");},),
           Form(
               key: formGlobalKey,
               child: Column(children: [
                 requiredFields(required_controllers),
                 optionalFields(optional_controllers),
               ])),
-          //requiredFields(required_controllers),
-          //optionalFields(optional_controllers),
-          optionsWidget("Do you drink?", _doesDrink),
-          optionsWidget("Do you smoke?", _doesSmoke),
+          Container(
+            height: h(60),
+            margin: EdgeInsets.only(top: h(15)),
+            decoration: BoxDecoration(
+              color: AppColors.secondaryElement,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: CheckboxListTile(
+              value: _doesSmoke,
+              title: Text(
+                "Smoking",
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                  fontFamily: "Avenir",
+                  fontWeight: FontWeight.w500,
+                  fontSize: f(18),
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _doesSmoke = value!;
+                });
+              },
+            ),
+          ),
+          Container(
+            height: h(60),
+            margin: EdgeInsets.only(top: h(15)),
+            decoration: BoxDecoration(
+              color: AppColors.secondaryElement,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: CheckboxListTile(
+              value: _doesDrink,
+              title: Text(
+                "Drinking",
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                  fontFamily: "Avenir",
+                  fontWeight: FontWeight.w500,
+                  fontSize: f(18),
+                ),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _doesDrink = value!;
+                });
+              },
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 25.0, bottom: 15.0),
             child: TextButton(
@@ -189,8 +243,8 @@ class _profilePageState extends State<profilePage> {
                     year: _year.text,
                     location: _location.text,
                     major: _major.text,
-                    smoke: _doesSmoke.value,
-                    drink: _doesDrink.value,
+                    smoke: _doesSmoke,
+                    drink: _doesDrink,
                     instagram: _instagram.text,
                     snapchat: _snapchat.text,
                   );

@@ -7,7 +7,7 @@ import 'package:bdate/common/values/values.dart';
 import 'package:bdate/pages/app.dart';
 import 'dart:convert';
 
-import 'package:bdate/common/widgets/widgets.dart';
+import 'package:bdate/common/widgets/matchcard.dart';
 import 'package:bdate/common/utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -122,9 +122,12 @@ List<Widget> getList(List<User> users, BuildContext b, User usr) {
   List<Widget> childs = [];
   childs.add(_title());
   for (var i = 0; i < users.length; i++) {
-    childs.add(card(users[i]));
+    childs.add(matchcard(users[i]));
   }
-  childs.add(_buildButtons(b, usr));
+  if (childs.length == 1) {
+    childs.add(Text('You have no matches'));
+  }
+  //childs.add(_buildButtons(b, usr));
   return childs;
 }
 
@@ -146,7 +149,7 @@ Widget _title() {
           )));
 }
 
-Widget _buildButtons(context, User usr) {
+/*Widget _buildButtons(context, User usr) {
   return Container(
       margin: EdgeInsets.all(h(48)),
       child: Row(
@@ -187,3 +190,4 @@ Widget _buildButtons(context, User usr) {
         ],
       ));
 }
+*/
