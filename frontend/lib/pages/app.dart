@@ -6,6 +6,7 @@ import 'package:bdate/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:bdate/common/widgets/widgets.dart';
 import 'package:bdate/common/utils/utils.dart';
+import 'package:bdate/common/api/api.dart';
 
 class AppPage extends StatefulWidget {
   AppPage({Key? key, @required required this.curUser}) : super(key: key);
@@ -97,7 +98,8 @@ class _AppPage extends State<AppPage> {
         duration: const Duration(milliseconds: 200), curve: Curves.ease);
   }
 
-  void _handlePageChanged(int page) {
+  void _handlePageChanged(int page) async {
+    widget.curUser = await GetUser.getUser(widget.curUser.id);
     setState(() {
       this._page = page;
     });
@@ -119,7 +121,9 @@ class _AppPage extends State<AppPage> {
     return PageView(
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        discoverPage(curUser: widget.curUser,),
+        discoverPage(
+          curUser: widget.curUser,
+        ),
         matchesPage(),
         profilePage(
           curUser: widget.curUser,

@@ -3,6 +3,7 @@ import 'package:bdate/common/utils/utils.dart';
 import 'package:bdate/common/values/values.dart';
 import 'package:bdate/common/widgets/widgets.dart';
 import 'package:bdate/common/entity/user.dart';
+import 'package:bdate/common/api/update_user.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'dart:io';
@@ -85,6 +86,7 @@ class _profilePageState extends State<profilePage> {
   }
 
   Widget _buildInputForm(context) {
+    final formGlobalKey = GlobalKey<FormState>();
     final TextEditingController _email = TextEditingController();
     _email.text = widget.curUser.email;
     final TextEditingController _paswd = TextEditingController();
@@ -159,15 +161,58 @@ class _profilePageState extends State<profilePage> {
               ),
             ),
           ),
-          requiredFields(required_controllers),
-          optionalFields(optional_controllers),
+          Form(
+              key: formGlobalKey,
+              child: Column(children: [
+                requiredFields(required_controllers),
+                optionalFields(optional_controllers),
+              ])),
+          //requiredFields(required_controllers),
+          //optionalFields(optional_controllers),
           optionsWidget("Do you drink?", _doesDrink),
           optionsWidget("Do you smoke?", _doesSmoke),
           Padding(
             padding: const EdgeInsets.only(top: 25.0, bottom: 15.0),
             child: TextButton(
-              onPressed: () {
-                // will send put request to update the profile
+              onPressed: () async {
+                if (formGlobalKey.currentState != null &&
+                    formGlobalKey.currentState!.validate()) {
+                  formGlobalKey.currentState!.save();
+                  UpdateUser user = UpdateUser(
+                    firstName: _firstName.text,
+                    lastName: _lastName.text,
+                    email: _email.text,
+                    password: _paswd.text,
+                    age: int.parse(_age.text),
+                    ethnicity: _ethnicity.text,
+                    height: _height.text,
+                    year: _year.text,
+                    location: _location.text,
+                    major: _major.text,
+                    smoke: _doesSmoke.value,
+                    drink: _doesDrink.value,
+                    instagram: _instagram.text,
+                    snapchat: _snapchat.text,
+                  );
+                  var res =
+                      await ReviseUser.updateUser(widget.curUser.id, user);
+                  if (res != null) {
+                    setState(() {
+                      widget.curUser = res;
+                    });
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          _buildPopupDialog(context, true),
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          _buildPopupDialog(context, false),
+                    );
+                  }
+                }
               },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -196,4 +241,31 @@ class _profilePageState extends State<profilePage> {
           File(fileName!.path); // this is absolute path on user's simulator
     });
   }
+}
+
+Widget _buildPopupDialog(BuildContext context, bool isSuccess) {
+  return AlertDialog(
+    title: Center(
+        child: Text(
+      isSuccess ? 'Profile Saved' : 'Profile Not Saved',
+      style: TextStyle(fontSize: 25),
+    )),
+    /*
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text("Hello"),
+      ],
+    ),
+    */
+    actions: <Widget>[
+      TextButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: const Text('Close'),
+      ),
+    ],
+  );
 }

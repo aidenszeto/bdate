@@ -10,6 +10,9 @@ import 'package:bdate/common/entity/user.dart';
 
 import 'dart:io';
 
+final TextEditingController _instagram = TextEditingController();
+final TextEditingController _snapchat = TextEditingController();
+
 class CreateOptionalPage extends StatefulWidget {
   CreateOptionalPage({Key? key, @required required this.newUser})
       : super(key: key);
@@ -60,8 +63,6 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
   }
 
   Widget _buildInputForm(context) {
-    final TextEditingController _instagram = TextEditingController();
-    final TextEditingController _snapchat = TextEditingController();
     optional_controllers = [_instagram, _snapchat];
 
     return Container(
@@ -119,7 +120,7 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
                           curUser: curUser,
                         ),
                       ));
-                }
+                } else {}
               },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
