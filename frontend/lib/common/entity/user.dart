@@ -7,6 +7,8 @@ String userToJson(CreateUser data) => json.encode(data.toJson());
 
 String loginToJson(LoginUser data) => json.encode(data.toJson());
 
+String updateToJson(UpdateUser data) => json.encode(data.toJson());
+
 class User {
   User({
     required this.id,
@@ -164,5 +166,60 @@ class LoginUser {
   Map<String, dynamic> toJson() => {
         "email": email,
         "password": password,
+      };
+}
+
+class UpdateUser {
+  UpdateUser({
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.password,
+    this.age,
+    //this.gender,
+    this.ethnicity,
+    this.height,
+    this.year,
+    this.location,
+    this.major,
+    this.smoke,
+    this.drink,
+    //this.photo,
+    this.instagram,
+    this.snapchat,
+  });
+
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? password;
+  int? age;
+  //String? gender;
+  String? ethnicity;
+  String? height;
+  String? year;
+  String? location;
+  String? major;
+  bool? smoke;
+  bool? drink;
+  //String? photo;
+  String? instagram;
+  String? snapchat;
+
+  Map<String, dynamic> toJson() => {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "password": password,
+        "age": age,
+        "ethnicity": ethnicity,
+        "height": height,
+        "year": year,
+        "location": location,
+        "major": major,
+        "smoke": smoke,
+        "drink": drink,
+        "instagram": instagram,
+        "snapchat": snapchat,
       };
 }
