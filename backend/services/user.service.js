@@ -194,7 +194,7 @@ const updateLikedBy = async (req, res) => {
     });
 };
 
-//idk what to do within the .then and the .catch blocks here
+//there isn't much to do in the .then and the .catch blocks here
 const addToMatchesList = async (user1, user2) => {
   User.findByIdAndUpdate(user1, { $addToSet: { matches: user2 } })
     .then((res) => {
@@ -297,9 +297,9 @@ const sendVerificationEmail = async (email, verificationNumber) => {
   });
 
   let info = await transporter.sendMail({
-    from: '"BDate verification" <verify@bdate.com>', // sender address
+    from: '"Bdate verification" <verify@bdate.com>', // sender address
     to: `${email}`, // list of receivers
-    subject: "Verify your Bdate Account!", // Subject line
+    subject: "Welcome to Bdate!", // Subject line
     text: "Enter the following code in the Bdate App",
     html: `<p> Your verification code is ${verificationNumber}</p>`,
   });
