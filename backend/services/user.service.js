@@ -1,11 +1,6 @@
 const nodemailer = require("nodemailer");
-const axios = require("axios");
-const FormData = require("form-data");
-const smms = require("smms-cli");
-require("dotenv").config();
 
 const User = require("../models/user.model");
-const formData = new FormData();
 
 const getAllUsers = async (req, res) => {
   User.find()

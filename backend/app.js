@@ -1,5 +1,4 @@
 const express = require("express");
-const fileupload = require("express-fileupload");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -13,7 +12,6 @@ const userRouter = require("./routes/user.routes");
 // Enable middleware for parsing incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(fileupload());
 
 // Enable CORS support
 app.use(cors());
