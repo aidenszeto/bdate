@@ -11,9 +11,9 @@ router.post("/login", User.loginUser);
 router.post("/signup", User.addUser);
 router.put("/update/:_id", User.updateUser);
 
-router.put("/verify/:email", User.verifyUser);
+router.put("/verify", User.verifyUser);
 router.put("/likeduser", User.updateLikedBy);
 router.put("/dislikeduser", User.updateDislikedBy);
-router.post("/filter", User.filterUsers)
+router.post("/filter", User.filterUsers);
 
 module.exports = router;

@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const {PreferencesSchema} = require("./preferences.model");
+const { PreferencesSchema } = require("./preferences.model");
 const Schema = mongoose.Schema;
 
-const {String, Array, Boolean, Number} = Schema.Types;
+const { String, Array, Boolean, Number } = Schema.Types;
 
 /**
  * User model:
@@ -31,7 +31,7 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    index: {unique: true},
+    index: { unique: true },
     required: [true, "Email cannot be blank"],
   },
   password: {
@@ -76,7 +76,8 @@ const UserSchema = new Schema({
   },
   photo: {
     type: String,
-    default: "https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg"
+    default:
+      "https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg",
   },
   instagram: {
     type: String,
@@ -98,10 +99,14 @@ const UserSchema = new Schema({
     type: Array,
     default: [],
   },
+  verificationNumber: {
+    type: Number,
+    default: -1,
+  },
   verified: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const User = mongoose.model("user", UserSchema);
