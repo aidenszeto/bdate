@@ -42,6 +42,8 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
   final TextEditingController _snapchat = TextEditingController();
   final TextEditingController _imageURL = TextEditingController();
   bool specifyImage = false;
+  bool errorText = false;
+  bool isPosted = false;
   List<TextEditingController> optional_controllers = [];
 
   @override
@@ -55,6 +57,7 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _buildInputForm(context),
+                    errorText ? _errorText() : Container(),
                     _buildSignIn(context),
                   ],
                 ),
@@ -131,7 +134,14 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
                               email: res.email,
                             )),
                   );
-                } else {}
+                  setState(() {
+                    isPosted = true;
+                  });
+                } else if (isPosted == false) {
+                  setState(() {
+                    errorText = true;
+                  });
+                }
               },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -168,5 +178,13 @@ class CreateOptionalPageState extends State<CreateOptionalPage> {
             style: TextStyle(color: AppColors.primaryText, fontSize: f(18)),
           ),
         ));
+  }
+
+  Widget _errorText() {
+    return const Center(
+        child: Text(
+      "Invalid email format",
+      style: TextStyle(color: Colors.red),
+    ));
   }
 }
