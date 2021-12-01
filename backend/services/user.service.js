@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const axios = require("axios");
 const FormData = require("form-data");
+const smms = require("smms-cli");
 require("dotenv").config();
 
 const User = require("../models/user.model");
@@ -38,8 +39,6 @@ const addUser = async (req, res) => {
     matches,
   } = req.body;
 
-  console.log(req.body);
-
   //const existingUser = User.find({ email })
   // console.log(existingUser)
   // if (existingUser) {
@@ -54,8 +53,6 @@ const addUser = async (req, res) => {
   //   }
   // })
   const verificationNumber = Math.floor(100000 + Math.random() * 900000);
-
-  //handle image posting. Get the url and add that to the user object
 
   const user = new User({
     firstName,
@@ -98,6 +95,45 @@ const addUser = async (req, res) => {
     .catch((err) => {
       res.status(400).send("Couldn't sign up user");
     });
+};
+
+const uploadPhoto = async (req, res) => {
+  console.log(req.body.photo);
+
+  // const {
+  //   _id
+  // } = req._id
+  // //handle image posting. Get the url and add that to the user object
+  // const config = {
+  //   method: "post",
+  //   url: "https://sm.ms/api/v2/upload",
+  //   headers: {
+  //     Authorization: process.env.IMG_KEY,
+  //     //...formData.getHeaders(),
+  //   },
+  //   data: {
+  //     smfile: req.files.smfile,
+  //   },
+  //   maxBodyLength: Infinity,
+  //   maxContentLength: Infinity,
+  // };
+  // smms
+  //   .upload(req.files.smfile.data.buffer)
+  //   .then((response) => {
+  //     console.log(response);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  //   User.findOneAndUpdate()
+  // axios(config)
+  //   .then(function (response) {
+  //     console.log(JSON.stringify(response.data));
+  //     res.send(response.data);
+  //   })
+  //   .catch(function (err) {
+  //     res.send(err);
+  //   });
 };
 
 const updateUser = async (req, res) => {
@@ -277,4 +313,5 @@ module.exports = {
   verifyUser,
   updateLikedBy,
   updateDislikedBy,
+  uploadPhoto,
 };
